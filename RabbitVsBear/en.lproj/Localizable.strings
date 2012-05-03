@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  RabbitVsBear
+
+  Created by Oleksii Vynogradov on 5/1/12.
+  Copyright (c) 2012 IXC-USA Corp. All rights reserved.
+*/
+"Message from support team." = "Message from support team.";
+"Cancel" = "Cancel";
+"OK" = "OK";
