@@ -23,6 +23,7 @@
 @property (strong) NSTimer *progressTimer;
 
 @property (weak, nonatomic) IBOutlet UIImageView *image;
+@property (weak, nonatomic) IBOutlet UIImageView *imageBackground;
 @property (weak, nonatomic) IBOutlet UIButton *previousPage;
 @property (weak, nonatomic) IBOutlet UIButton *nextPage;
 @property (weak, nonatomic) IBOutlet UIButton *flagAE;

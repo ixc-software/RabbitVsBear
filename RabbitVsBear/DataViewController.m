@@ -31,6 +31,7 @@
 @synthesize dataLabel = _dataLabel;
 @synthesize dataObject = _dataObject;
 @synthesize image = _image;
+@synthesize imageBackground = _imageBackground;
 @synthesize previousPage = _previousPage;
 @synthesize nextPage = _nextPage;
 @synthesize flagAE = _flag1;
@@ -98,6 +99,7 @@
     [self setPlaybackProgress:nil];
     [self setFinalTextInsideBox:nil];
     [self setPageNumber:nil];
+    [self setImageBackground:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     self.dataLabel = nil;
@@ -110,9 +112,14 @@
     //self.dataLabel.text = [self.dataObject description];
     NSDictionary *dataForPage = self.dataObject;
     //NSLog(@"data for page:%@",dataForPage);
-    self.pageNumber.text = [dataForPage valueForKey:@"page"];
+    
     UIImage *imageLandscape = nil;
     UIImage *imagePortrait = nil;
+    
+    UIImage *imageLandscapeBackground = nil;
+    UIImage *imagePortraitBackground = nil;
+
+    
     UIFont *currentFont = self.finalTextInsideBox.font;
     
     if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
@@ -120,30 +127,72 @@
         imagePortrait = [dataForPage valueForKey:@"imageIphonePortrait"];
         self.finalTextInsideBox.font = [UIFont fontWithName:currentFont.fontName size:14.0];
         
+        imageLandscapeBackground = [UIImage imageNamed:@"page00GIPhone.png"];
+        imagePortraitBackground = [UIImage imageNamed:@"page00VIPhone.png"];
+
+        
     } else {
         imageLandscape = [dataForPage valueForKey:@"imageIPadLandscape"];
         imagePortrait = [dataForPage valueForKey:@"imageIPadPortrait"];
         self.finalTextInsideBox.font = [UIFont fontWithName:currentFont.fontName size:24.0];
-
+        imageLandscapeBackground = [UIImage imageNamed:@"page00GIPad.png"];
+        imagePortraitBackground = [UIImage imageNamed:@"page00VIPad.png"];
     }
+    
     //[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"currentSelectedFlagTag"];
 
     self.currentSelectedFlagTag = [[NSUserDefaults standardUserDefaults] valueForKey:@"currentSelectedFlagTag"];
     
     UIInterfaceOrientation currentOrientation = self.interfaceOrientation;
-    if (currentOrientation == UIInterfaceOrientationLandscapeLeft || currentOrientation == UIInterfaceOrientationLandscapeRight) [self.image setImage:imageLandscape];
-    else [self.image setImage:imagePortrait];
+    if (currentOrientation == UIInterfaceOrientationLandscapeLeft || currentOrientation == UIInterfaceOrientationLandscapeRight) { 
+        [self.image setImage:imageLandscape];
+        [self.imageBackground setImage:imageLandscapeBackground];
+        NSLog(@"frame of imageLandscapeBackground:%@",NSStringFromCGRect(self.imageBackground.frame));
+
+    }
+    else { 
+        [self.image setImage:imagePortrait];
+        [self.imageBackground setImage:imagePortraitBackground];
+        //NSLog(@"frame of imagePortraitBackground:%@",NSStringFromCGRect(self.imageBackground.frame));
+
+    }
+    
+    NSString *pageNumberDelimiter = nil;
+    
     if (!self.currentSelectedFlagTag) { 
         NSArray* preferredLangs = [NSLocale preferredLanguages];
         if (preferredLangs.count > 0) {
             NSString *language = [preferredLangs objectAtIndex:0];
 
-            if ([language isEqualToString:@"ru"]) self.currentSelectedFlagTag = [[NSNumber alloc] initWithInt:5];
-            if ([language isEqualToString:@"zh-Hans"] || [language isEqualToString:@"zh-Hant"]) self.currentSelectedFlagTag = [[NSNumber alloc] initWithInt:1];
-            if ([language isEqualToString:@"en"] || [language isEqualToString:@"en-GB"] ) self.currentSelectedFlagTag = [[NSNumber alloc] initWithInt:5];
-            if ([language isEqualToString:@"es"]) self.currentSelectedFlagTag = [[NSNumber alloc] initWithInt:3];
-            if ([language isEqualToString:@"ar"]) self.currentSelectedFlagTag = [[NSNumber alloc] initWithInt:4];
-            if ([language isEqualToString:@"de"]) self.currentSelectedFlagTag = [[NSNumber alloc] initWithInt:6];
+            if ([language isEqualToString:@"ru"]) { 
+                self.currentSelectedFlagTag = [[NSNumber alloc] initWithInt:5];
+                pageNumberDelimiter = @"из";
+            }
+            if ([language isEqualToString:@"zh-Hans"] || [language isEqualToString:@"zh-Hant"]) { 
+                self.currentSelectedFlagTag = [[NSNumber alloc] initWithInt:1];
+                pageNumberDelimiter = @"from";
+
+            }
+            if ([language isEqualToString:@"en"] || [language isEqualToString:@"en-GB"] ) { 
+                self.currentSelectedFlagTag = [[NSNumber alloc] initWithInt:2];
+                pageNumberDelimiter = @"from";
+
+            }
+            if ([language isEqualToString:@"es"]) {
+                self.currentSelectedFlagTag = [[NSNumber alloc] initWithInt:3];
+                pageNumberDelimiter = @"from";
+
+            }
+            if ([language isEqualToString:@"ar"]) { 
+                self.currentSelectedFlagTag = [[NSNumber alloc] initWithInt:4];
+                pageNumberDelimiter = @"from";
+
+            }
+            if ([language isEqualToString:@"de"]) {
+                self.currentSelectedFlagTag = [[NSNumber alloc] initWithInt:6];
+                pageNumberDelimiter = @"from";
+
+            }
             [[NSUserDefaults standardUserDefaults] setValue:self.currentSelectedFlagTag forKey:@"currentSelectedFlagTag"];
             [[NSUserDefaults standardUserDefaults] synchronize];
 
@@ -151,6 +200,39 @@
         [self startAnimationForFlagsForSelectedTag:self.currentSelectedFlagTag.unsignedIntegerValue forFirstStart:NO];
     }
     else [self startAnimationForFlagsForSelectedTag:self.currentSelectedFlagTag.unsignedIntegerValue forFirstStart:NO];
+
+    
+//    BOOL isReverseShow = NO;
+//    
+//    if (self.currentSelectedFlagTag.unsignedIntegerValue == 0 || self.currentSelectedFlagTag.unsignedIntegerValue == 5) { 
+//        pageNumberDelimiter = @"из";
+//    }
+//    
+//    if (self.currentSelectedFlagTag.unsignedIntegerValue == 1 || self.currentSelectedFlagTag.unsignedIntegerValue == 2) { 
+//        pageNumberDelimiter = @"from";
+//    }
+//    
+//    if (self.currentSelectedFlagTag.unsignedIntegerValue == 3) { 
+//        pageNumberDelimiter = @"de";
+//    }
+//
+//    if (self.currentSelectedFlagTag.unsignedIntegerValue == 4) { 
+//        pageNumberDelimiter = @" من";
+//        isReverseShow = YES;
+//        
+//    }
+//    if (self.currentSelectedFlagTag.unsignedIntegerValue == 6) { 
+//        pageNumberDelimiter = @"von";
+//    }
+//    
+//    NSString *page = [dataForPage valueForKey:@"page"];
+//    
+//    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+//    NSNumber *pageNumber = [formatter numberFromString:page];
+//    formatter.locale = [NSLocale currentLocale];
+//    
+//    if (isReverseShow) self.pageNumber.text = [NSString stringWithFormat:@"%@ %@ %@",[formatter stringFromNumber:[NSNumber numberWithInt:16]],pageNumberDelimiter,[formatter stringFromNumber:pageNumber]];
+//        else self.pageNumber.text = [NSString stringWithFormat:@"%@ %@ %@",[formatter stringFromNumber:pageNumber],pageNumberDelimiter,[formatter stringFromNumber:[NSNumber numberWithInt:16]]];
 
 }
 - (void)viewWillDisappear:(BOOL)animated
@@ -164,23 +246,34 @@
     UIImage *imageLandscape = nil;
     UIImage *imagePortrait = nil;
     //NSLog(@"data for page:%@",dataForPage);
+    UIImage *imageLandscapeBackground = nil;
+    UIImage *imagePortraitBackground = nil;
 
     if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
         imageLandscape = [dataForPage valueForKey:@"imageIphoneLandscape"];
         imagePortrait = [dataForPage valueForKey:@"imageIphonePortrait"];
+        imageLandscapeBackground = [UIImage imageNamed:@"page00GIPhone.png"];
+        imagePortraitBackground = [UIImage imageNamed:@"page00VIPhone.png"];
+
     } else {
         imageLandscape = [dataForPage valueForKey:@"imageIPadLandscape"];
         imagePortrait = [dataForPage valueForKey:@"imageIPadPortrait"];
+        imageLandscapeBackground = [UIImage imageNamed:@"page00GIPad.png"];
+        imagePortraitBackground = [UIImage imageNamed:@"page00VIPad.png"];
+
     }
     if (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight) { 
         [self.image setImage:imageLandscape];
+        [self.imageBackground setImage:imageLandscapeBackground];
+
         if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
             //iPhone
             self.playStop.frame = CGRectMake(385, 17, self.playStop.frame.size.width, self.playStop.frame.size.height);
             self.playbackProgress.frame = CGRectMake(385, 0, self.playbackProgress.frame.size.width, self.playbackProgress.frame.size.height);
-            self.buttonsView.frame = CGRectMake(330, 130, self.buttonsView.frame.size.width, self.buttonsView.frame.size.height);
-            self.text.frame = CGRectMake(7, 203, 295, 70);
-            self.finalTextInsideBox.frame = CGRectMake(7, 203, 283, 70);
+            self.buttonsView.frame = CGRectMake(320, 130, self.buttonsView.frame.size.width, self.buttonsView.frame.size.height);
+            self.text.frame = CGRectMake(7, 203, 305, 70);
+            self.finalTextInsideBox.frame = CGRectMake(7, 203, 303, 70);
+            self.pageNumber.frame = CGRectMake(7, - 20, self.pageNumber.frame.size.width, self.pageNumber.frame.size.height);
         } else {
             // iPad
             self.playStop.frame = CGRectMake(888, 349, self.playStop.frame.size.width, self.playStop.frame.size.height);
@@ -188,27 +281,32 @@
             self.buttonsView.frame = CGRectMake(763, 466, self.buttonsView.frame.size.width, self.buttonsView.frame.size.height);
             self.text.frame = CGRectMake(20, 552, 735, 155);
             self.finalTextInsideBox.frame = CGRectMake(35, 565, 703, 126);
+            self.pageNumber.frame = CGRectMake(20, - 20, self.pageNumber.frame.size.width, self.pageNumber.frame.size.height);
 
         }
     }
     else { 
         [self.image setImage:imagePortrait];
+        [self.imageBackground setImage:imagePortraitBackground];
 
         if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
             //iPhone
             
-            self.playStop.frame = CGRectMake(228, 199, self.playStop.frame.size.width, self.playStop.frame.size.height);
-            self.playbackProgress.frame = CGRectMake(228, 274, self.playbackProgress.frame.size.width, self.playbackProgress.frame.size.height);
-            self.buttonsView.frame = CGRectMake(179, 301, self.buttonsView.frame.size.width, self.buttonsView.frame.size.height);
-            self.text.frame = CGRectMake(6, 294, 184, 139);
-            self.finalTextInsideBox.frame = CGRectMake(13, 300, 167, 126);
+            self.playStop.frame = CGRectMake(236, 178, self.playStop.frame.size.width, self.playStop.frame.size.height);
+            self.playbackProgress.frame = CGRectMake(236, 253, self.playbackProgress.frame.size.width, self.playbackProgress.frame.size.height);
+            self.buttonsView.frame = CGRectMake(163, 270, self.buttonsView.frame.size.width, self.buttonsView.frame.size.height);
+            self.text.frame = CGRectMake(6, 270, 163, 152);
+            self.finalTextInsideBox.frame = CGRectMake(13, 276, 156, 146);
+            self.pageNumber.frame = CGRectMake(111, 420, self.pageNumber.frame.size.width, self.pageNumber.frame.size.height);
+
         } else {
             //iPad
             self.playStop.frame = CGRectMake(619, 543, self.playStop.frame.size.width, self.playStop.frame.size.height);
             self.playbackProgress.frame = CGRectMake(619, 623, self.playbackProgress.frame.size.width, self.playbackProgress.frame.size.height);
-            self.buttonsView.frame = CGRectMake(489, 733, self.buttonsView.frame.size.width, self.buttonsView.frame.size.height);
-            self.text.frame = CGRectMake(20, 666, 442, 298);
-            self.finalTextInsideBox.frame = CGRectMake(45, 679, 404, 272);
+            self.buttonsView.frame = CGRectMake(507, 666, self.buttonsView.frame.size.width, self.buttonsView.frame.size.height);
+            self.text.frame = CGRectMake(20, 666, 479, 241);
+            self.finalTextInsideBox.frame = CGRectMake(45, 679, 443, 228);
+            self.pageNumber.frame = CGRectMake(280, 924, self.pageNumber.frame.size.width, self.pageNumber.frame.size.height);
 
         }
     }
@@ -333,8 +431,49 @@ static inline double radians (double degrees) { return degrees * M_PI/180; }
     self.currentSelectedFlagTag = [[NSNumber alloc] initWithInteger:selectedTag];
     [[NSUserDefaults standardUserDefaults] setValue:self.currentSelectedFlagTag forKey:@"currentSelectedFlagTag"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+  
+    // change localized page number
+    BOOL isReverseShow = NO;
+    
+    NSString *pageNumberDelimiter = nil;
+    if (self.currentSelectedFlagTag.unsignedIntegerValue == 0 || self.currentSelectedFlagTag.unsignedIntegerValue == 5) { 
+        pageNumberDelimiter = @"из";
+    }
+    
+    if ( self.currentSelectedFlagTag.unsignedIntegerValue == 2) { 
+        pageNumberDelimiter = @"from";
+    }
+
+    if (self.currentSelectedFlagTag.unsignedIntegerValue == 1) { 
+        pageNumberDelimiter = @" ";
+
+    }
+    if (self.currentSelectedFlagTag.unsignedIntegerValue == 3) { 
+        pageNumberDelimiter = @"de";
+    }
+    
+    if (self.currentSelectedFlagTag.unsignedIntegerValue == 4) { 
+        pageNumberDelimiter = @" من";
+        isReverseShow = YES;
+        
+    }
+    if (self.currentSelectedFlagTag.unsignedIntegerValue == 6) { 
+        pageNumberDelimiter = @"von";
+    }
     
     NSString *page = [self.dataObject valueForKey:@"page"];
+    
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    NSNumber *pageNumber = [formatter numberFromString:page];
+    formatter.locale = [NSLocale currentLocale];
+    
+//    if (isReverseShow == YES) self.pageNumber.text = [NSString stringWithFormat:@"%@ %@ %@",[formatter stringFromNumber:[NSNumber numberWithInt:16]],pageNumberDelimiter,[formatter stringFromNumber:pageNumber]];
+//    else 
+        self.pageNumber.text = [NSString stringWithFormat:@"%@ %@ %@",[formatter stringFromNumber:pageNumber],pageNumberDelimiter,[formatter stringFromNumber:[NSNumber numberWithInt:16]]];
+
+//    NSLog(@">>>>>>>>>>>>%@",[NSString stringWithFormat:@"%@ %@ %@",[formatter stringFromNumber:[NSNumber numberWithInt:16]],pageNumberDelimiter,[formatter stringFromNumber:pageNumber]]);
+    
+    
     
     NSString *language = nil;
     

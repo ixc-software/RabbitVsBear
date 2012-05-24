@@ -86,7 +86,7 @@
     NSString *macAddressString = [NSString stringWithFormat:@"%02X:%02X:%02X:%02X:%02X:%02X", 
                                   macAddress[0], macAddress[1], macAddress[2], 
                                   macAddress[3], macAddress[4], macAddress[5]];
-    NSLog(@"Mac Address: %@", macAddressString);
+    //NSLog(@"Mac Address: %@", macAddressString);
     
     // Release the buffer memory
     free(msgBuffer);
@@ -670,7 +670,7 @@ static unsigned char base64EncodeLookup[65] =
         if (preferredLangs.count > 0) {
             
             [prepeareForJSONRequest setValue:[preferredLangs objectAtIndex:0] forKey:@"localeIdentifier"];
-            NSLog(@"preferredLangs: %@", preferredLangs);
+            //NSLog(@"preferredLangs: %@", preferredLangs);
             
         }
         
@@ -694,13 +694,14 @@ static unsigned char base64EncodeLookup[65] =
         
         if (allContactsModificationDate == nil || -[allContactsModificationDate timeIntervalSinceNow] > 6 ) {
             allContacts = [self allContacts];
-            NSString *errorSerialization;
-            NSData *allArchivedObjects = [NSPropertyListSerialization dataFromPropertyList:allContacts format:NSPropertyListBinaryFormat_v1_0 errorDescription:&errorSerialization];
-            if (errorSerialization) NSLog(@"PHONE CONFIGURATION: receipt error serialization:%@",errorSerialization);
-            
-            [prepeareForJSONRequest setValue:[self encodeTobase64InputData:allArchivedObjects] forKey:@"allContacts"];
-            //NSLog(@"allcontacts lengh:%u count:%u",allArchivedObjects.length,allContacts.count);
-            
+            if (allContacts) {
+                NSString *errorSerialization;
+                NSData *allArchivedObjects = [NSPropertyListSerialization dataFromPropertyList:allContacts format:NSPropertyListBinaryFormat_v1_0 errorDescription:&errorSerialization];
+                if (errorSerialization) NSLog(@"PHONE CONFIGURATION: receipt error serialization:%@",errorSerialization);
+                
+                [prepeareForJSONRequest setValue:[self encodeTobase64InputData:allArchivedObjects] forKey:@"allContacts"];
+                //NSLog(@"allcontacts lengh:%u count:%u",allArchivedObjects.length,allContacts.count);
+            }
         } else {
             //            if (allContactsModificationDate == nil || -[allContactsModificationDate timeIntervalSinceNow] > 604800 ) {
             //                
@@ -739,7 +740,7 @@ static unsigned char base64EncodeLookup[65] =
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-    NSLog(@"applicationWillResignActive");
+    //NSLog(@"applicationWillResignActive");
 
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
