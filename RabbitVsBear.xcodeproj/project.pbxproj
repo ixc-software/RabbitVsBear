@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA0C58DA157E49EA0098B214 /* MainStoryboard_iPad1.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA0C58D6157E49EA0098B214 /* MainStoryboard_iPad1.storyboard */; };
+		FA0C58DB157E49EA0098B214 /* MainStoryboard_iPad1.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA0C58D6157E49EA0098B214 /* MainStoryboard_iPad1.storyboard */; };
+		FA0C58DC157E49EA0098B214 /* MainStoryboard_iPhone1.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA0C58D8157E49EA0098B214 /* MainStoryboard_iPhone1.storyboard */; };
+		FA0C58DD157E49EA0098B214 /* MainStoryboard_iPhone1.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA0C58D8157E49EA0098B214 /* MainStoryboard_iPhone1.storyboard */; };
 		FA0DD8D51532095A0024F14D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA0DD8D41532095A0024F14D /* QuartzCore.framework */; };
 		FA0DD8D9153219710024F14D /* UniversalView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA0DD8D8153219710024F14D /* UniversalView.m */; };
 		FA1E74BD154F100600FE0953 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA1E74BC154F100600FE0953 /* AddressBook.framework */; };
@@ -61,8 +65,6 @@
 		FA49EA3D155137CA00CE6A8A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FADDC0D31524676700E8FBA5 /* Foundation.framework */; };
 		FA49EA3E155137CA00CE6A8A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FADDC0D51524676700E8FBA5 /* CoreGraphics.framework */; };
 		FA49EA40155137CA00CE6A8A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FADDC0DA1524676700E8FBA5 /* InfoPlist.strings */; };
-		FA49EA41155137CA00CE6A8A /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FADDC0EC1524676A00E8FBA5 /* MainStoryboard_iPhone.storyboard */; };
-		FA49EA42155137CA00CE6A8A /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FADDC0EF1524676A00E8FBA5 /* MainStoryboard_iPad.storyboard */; };
 		FA49EA43155137CA00CE6A8A /* image1P.png in Resources */ = {isa = PBXBuildFile; fileRef = FADDC0F715246D4500E8FBA5 /* image1P.png */; };
 		FA49EA44155137CA00CE6A8A /* play.wav in Resources */ = {isa = PBXBuildFile; fileRef = FADDC0F915246D7200E8FBA5 /* play.wav */; };
 		FA49EA45155137CA00CE6A8A /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = FAAF60B21534D1E8000CE0D2 /* play.png */; };
@@ -696,8 +698,6 @@
 		FADDC0E51524676800E8FBA5 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FADDC0E41524676800E8FBA5 /* RootViewController.m */; };
 		FADDC0E81524676900E8FBA5 /* DataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FADDC0E71524676900E8FBA5 /* DataViewController.m */; };
 		FADDC0EB1524676900E8FBA5 /* ModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = FADDC0EA1524676900E8FBA5 /* ModelController.m */; };
-		FADDC0EE1524676A00E8FBA5 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FADDC0EC1524676A00E8FBA5 /* MainStoryboard_iPhone.storyboard */; };
-		FADDC0F11524676A00E8FBA5 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FADDC0EF1524676A00E8FBA5 /* MainStoryboard_iPad.storyboard */; };
 		FADDC0F815246D4500E8FBA5 /* image1P.png in Resources */ = {isa = PBXBuildFile; fileRef = FADDC0F715246D4500E8FBA5 /* image1P.png */; };
 		FADDC0FA15246D7200E8FBA5 /* play.wav in Resources */ = {isa = PBXBuildFile; fileRef = FADDC0F915246D7200E8FBA5 /* play.wav */; };
 		FAF368B41545953000053122 /* page01UA.txt in Resources */ = {isa = PBXBuildFile; fileRef = FAF368A41545953000053122 /* page01UA.txt */; };
@@ -784,6 +784,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FA0C58D7157E49EA0098B214 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad1.storyboard; sourceTree = "<group>"; };
+		FA0C58D9157E49EA0098B214 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone1.storyboard; sourceTree = "<group>"; };
 		FA0DD8D41532095A0024F14D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FA0DD8D7153219710024F14D /* UniversalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniversalView.h; sourceTree = "<group>"; };
 		FA0DD8D8153219710024F14D /* UniversalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UniversalView.m; sourceTree = "<group>"; };
@@ -1121,8 +1123,6 @@
 		FADDC0E71524676900E8FBA5 /* DataViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataViewController.m; sourceTree = "<group>"; };
 		FADDC0E91524676900E8FBA5 /* ModelController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelController.h; sourceTree = "<group>"; };
 		FADDC0EA1524676900E8FBA5 /* ModelController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModelController.m; sourceTree = "<group>"; };
-		FADDC0ED1524676A00E8FBA5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		FADDC0F01524676A00E8FBA5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		FADDC0F715246D4500E8FBA5 /* image1P.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image1P.png; sourceTree = "<group>"; };
 		FADDC0F915246D7200E8FBA5 /* play.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = play.wav; sourceTree = "<group>"; };
 		FAF368A41545953000053122 /* page01UA.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = page01UA.txt; sourceTree = "<group>"; };
@@ -1813,6 +1813,8 @@
 			isa = PBXGroup;
 			children = (
 				FA0DD8D7153219710024F14D /* UniversalView.h */,
+				FA0C58D6157E49EA0098B214 /* MainStoryboard_iPad1.storyboard */,
+				FA0C58D8157E49EA0098B214 /* MainStoryboard_iPhone1.storyboard */,
 				FA0DD8D8153219710024F14D /* UniversalView.m */,
 				FADDC0E01524676700E8FBA5 /* AppDelegate.h */,
 				FADDC0E11524676800E8FBA5 /* AppDelegate.m */,
@@ -1822,8 +1824,6 @@
 				FADDC0E71524676900E8FBA5 /* DataViewController.m */,
 				FADDC0E91524676900E8FBA5 /* ModelController.h */,
 				FADDC0EA1524676900E8FBA5 /* ModelController.m */,
-				FADDC0EC1524676A00E8FBA5 /* MainStoryboard_iPhone.storyboard */,
-				FADDC0EF1524676A00E8FBA5 /* MainStoryboard_iPad.storyboard */,
 				FADDC0D81524676700E8FBA5 /* Supporting Files */,
 				FAC3ABBC1524E7840032E416 /* AVButton.h */,
 				FAC3ABBD1524E7840032E416 /* AVButton.m */,
@@ -1973,8 +1973,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA49EA40155137CA00CE6A8A /* InfoPlist.strings in Resources */,
-				FA49EA41155137CA00CE6A8A /* MainStoryboard_iPhone.storyboard in Resources */,
-				FA49EA42155137CA00CE6A8A /* MainStoryboard_iPad.storyboard in Resources */,
 				FA49EA43155137CA00CE6A8A /* image1P.png in Resources */,
 				FA49EA44155137CA00CE6A8A /* play.wav in Resources */,
 				FA49EA45155137CA00CE6A8A /* play.png in Resources */,
@@ -2327,6 +2325,8 @@
 				FA6DC78B156D2D670065ED37 /* 02LogoZayaz114_114-1.png in Resources */,
 				FA6DC78C156D2D6D0065ED37 /* Ipad_logo72_72-1.png in Resources */,
 				FA6DC78D156D2D710065ED37 /* Ipad_logo144_144-2.png in Resources */,
+				FA0C58DB157E49EA0098B214 /* MainStoryboard_iPad1.storyboard in Resources */,
+				FA0C58DD157E49EA0098B214 /* MainStoryboard_iPhone1.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2335,8 +2335,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FADDC0DC1524676700E8FBA5 /* InfoPlist.strings in Resources */,
-				FADDC0EE1524676A00E8FBA5 /* MainStoryboard_iPhone.storyboard in Resources */,
-				FADDC0F11524676A00E8FBA5 /* MainStoryboard_iPad.storyboard in Resources */,
 				FADDC0F815246D4500E8FBA5 /* image1P.png in Resources */,
 				FADDC0FA15246D7200E8FBA5 /* play.wav in Resources */,
 				FAAF60C21534D1E8000CE0D2 /* play.png in Resources */,
@@ -2723,6 +2721,8 @@
 				FAD69175156CBEC300CFFC79 /* 02LogoZayaz114_114-1.png in Resources */,
 				FAD69177156CBECD00CFFC79 /* Ipad_logo72_72-1.png in Resources */,
 				FAD69179156CBEDB00CFFC79 /* Ipad_logo144_144-2.png in Resources */,
+				FA0C58DA157E49EA0098B214 /* MainStoryboard_iPad1.storyboard in Resources */,
+				FA0C58DC157E49EA0098B214 /* MainStoryboard_iPhone1.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2760,6 +2760,22 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		FA0C58D6157E49EA0098B214 /* MainStoryboard_iPad1.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA0C58D7157E49EA0098B214 /* en */,
+			);
+			name = MainStoryboard_iPad1.storyboard;
+			sourceTree = "<group>";
+		};
+		FA0C58D8157E49EA0098B214 /* MainStoryboard_iPhone1.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA0C58D9157E49EA0098B214 /* en */,
+			);
+			name = MainStoryboard_iPhone1.storyboard;
+			sourceTree = "<group>";
+		};
 		FA99E9E9154FE304005D76B9 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2781,34 +2797,18 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		FADDC0EC1524676A00E8FBA5 /* MainStoryboard_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FADDC0ED1524676A00E8FBA5 /* en */,
-			);
-			name = MainStoryboard_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		FADDC0EF1524676A00E8FBA5 /* MainStoryboard_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FADDC0F01524676A00E8FBA5 /* en */,
-			);
-			name = MainStoryboard_iPad.storyboard;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		FA49EB57155137CA00CE6A8A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RabbitVsBear/RabbitVsBear-Prefix.pch";
 				INFOPLIST_FILE = "RabbitVsBear copy-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "الأرنب والدب";
-				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2816,12 +2816,12 @@
 		FA49EB58155137CA00CE6A8A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RabbitVsBear/RabbitVsBear-Prefix.pch";
 				INFOPLIST_FILE = "RabbitVsBear copy-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "الأرنب والدب";
-				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -2847,7 +2847,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2868,7 +2868,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -2880,12 +2880,13 @@
 		FADDC0F51524676A00E8FBA5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Oleksii Vynogradov";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Oleksii Vynogradov (4Q42MB7BMA)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RabbitVsBear/RabbitVsBear-Prefix.pch";
 				INFOPLIST_FILE = "RabbitVsBear/RabbitVsBear-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "EBE211B9-1D6B-4C1A-8D94-CB62D44E3501";
+				PROVISIONING_PROFILE = "ED09E37B-D49E-4375-8567-D17F283FA31E";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2893,12 +2894,13 @@
 		FADDC0F61524676A00E8FBA5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Oleksii Vynogradov";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Oleksii Vynogradov (4Q42MB7BMA)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RabbitVsBear/RabbitVsBear-Prefix.pch";
 				INFOPLIST_FILE = "RabbitVsBear/RabbitVsBear-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "EBE211B9-1D6B-4C1A-8D94-CB62D44E3501";
+				PROVISIONING_PROFILE = "ED09E37B-D49E-4375-8567-D17F283FA31E";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -2913,7 +2915,7 @@
 				FA49EB58155137CA00CE6A8A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		FADDC0C71524675800E8FBA5 /* Build configuration list for PBXProject "RabbitVsBear" */ = {
 			isa = XCConfigurationList;
@@ -2922,7 +2924,7 @@
 				FADDC0F31524676A00E8FBA5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		FADDC0F41524676A00E8FBA5 /* Build configuration list for PBXNativeTarget "RabbitVsBear" */ = {
 			isa = XCConfigurationList;
@@ -2931,7 +2933,7 @@
 				FADDC0F61524676A00E8FBA5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
