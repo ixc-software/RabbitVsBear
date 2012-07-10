@@ -47,6 +47,17 @@
 @synthesize finalTextInsideBox = _finalTextInsideBox;
 @synthesize playbackProgress = _playbabkProgress;
 @synthesize pageNumber = _pageNumber;
+@synthesize image1 = _bear;
+@synthesize image2 = _rabbit;
+@synthesize image3 = _kuznechik;
+@synthesize image4 = _belka;
+@synthesize image5 = _ptica;
+@synthesize image6 = _image6;
+@synthesize image7 = _image7;
+@synthesize nextPageButton = _nextPageButton;
+@synthesize animalVoice = _animalVoice;
+@synthesize animalVoiceOnOff = _animalVoiceOnOff;
+@synthesize previousPageButton = _previousPageButton;
 @synthesize modelController = _modelController;
 @synthesize isFlagsVisible,flag1frame,flag2frame,flag3frame,flag4frame,flag5frame,flag6frame,flag7frame;
 @synthesize allFlagsButtons = _allFlagsButtons;
@@ -66,6 +77,23 @@
     flag5frame = self.flagRUS.frame;
     flag6frame = self.flagGB.frame;
     flag7frame = self.flagUA.frame;
+    
+    self.image1.imageName = @"image1";
+    self.image2.imageName = @"image2";
+    self.image3.imageName = @"image3";
+    self.image4.imageName = @"image4";
+    self.image5.imageName = @"image5";
+    self.image6.imageName = @"image6";
+    self.image7.imageName = @"image7";
+    self.image1.dataViewController = self;
+    self.image2.dataViewController = self;
+    self.image3.dataViewController = self;
+    self.image4.dataViewController = self;
+    self.image5.dataViewController = self;
+    self.image6.dataViewController = self;
+    self.image7.dataViewController = self;
+    
+    
     self.allFlagsButtons = [[NSMutableArray alloc] initWithObjects:self.flagUA,self.flagCN,self.flagGB,self.flagSP,self.flagAE,self.flagRUS,self.flagDE, nil];
 //    self.text.layer.shadowOpacity=0.8;
 //    self.text.layer.shadowColor=[[UIColor blackColor] CGColor];
@@ -100,16 +128,25 @@
     [self setFinalTextInsideBox:nil];
     [self setPageNumber:nil];
     [self setImageBackground:nil];
+    [self setImage1:nil];
+    [self setImage2:nil];
+    [self setImage3:nil];
+    [self setImage4:nil];
+    [self setImage5:nil];
+    [self setImage6:nil];
+    [self setImage7:nil];
+    [self setAnimalVoice:nil];
+    [self setAnimalVoiceOnOff:nil];
+    [self setPreviousPageButton:nil];
+    [self setNextPageButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     self.dataLabel = nil;
     
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)prepareAllImagesForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 {
-    [super viewWillAppear:animated];
-    //self.dataLabel.text = [self.dataObject description];
     NSDictionary *dataForPage = self.dataObject;
     //NSLog(@"data for page:%@",dataForPage);
     
@@ -118,13 +155,13 @@
     
     UIImage *imageLandscapeBackground = nil;
     UIImage *imagePortraitBackground = nil;
-
+    
     
     UIFont *currentFont = self.finalTextInsideBox.font;
     
     if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
-        imageLandscape = [dataForPage valueForKey:@"imageIphoneLandscape"];
-        imagePortrait = [dataForPage valueForKey:@"imageIphonePortrait"];
+        imageLandscape = [dataForPage valueForKey:@"image_IPhone_Landscape"];
+        imagePortrait = [dataForPage valueForKey:@"image_IPhone_Portrait"];
         self.finalTextInsideBox.font = [UIFont fontWithName:currentFont.fontName size:14.0];
         
         imageLandscapeBackground = [UIImage imageNamed:@"page00GIPhone.png"];
@@ -132,31 +169,251 @@
 
         
     } else {
-        imageLandscape = [dataForPage valueForKey:@"imageIPadLandscape"];
-        imagePortrait = [dataForPage valueForKey:@"imageIPadPortrait"];
+        imageLandscape = [dataForPage valueForKey:@"image_IPad_Landscape"];
+        imagePortrait = [dataForPage valueForKey:@"image_IPad_Portrait"];
         self.finalTextInsideBox.font = [UIFont fontWithName:currentFont.fontName size:24.0];
         imageLandscapeBackground = [UIImage imageNamed:@"page00GIPad.png"];
         imagePortraitBackground = [UIImage imageNamed:@"page00VIPad.png"];
     }
     
     //[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"currentSelectedFlagTag"];
-
+    
     self.currentSelectedFlagTag = [[NSUserDefaults standardUserDefaults] valueForKey:@"currentSelectedFlagTag"];
     
-    UIInterfaceOrientation currentOrientation = self.interfaceOrientation;
-    if (currentOrientation == UIInterfaceOrientationLandscapeLeft || currentOrientation == UIInterfaceOrientationLandscapeRight) { 
+    //UIInterfaceOrientation currentOrientation = self.interfaceOrientation;
+    if (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight) { 
         [self.image setImage:imageLandscape];
         [self.imageBackground setImage:imageLandscapeBackground];
-        NSLog(@"frame of imageLandscapeBackground:%@",NSStringFromCGRect(self.imageBackground.frame));
+        //NSLog(@"frame of image Landscape:%@",NSStringFromCGRect(self.image.frame));
+        if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
+            
+            //iPhone Gorizontal/ Landcape
+            
+            self.playStop.frame = CGRectMake(384, 45, self.playStop.frame.size.width, self.playStop.frame.size.height);
+            self.playbackProgress.frame = CGRectMake(384, 36, self.playbackProgress.frame.size.width, self.playbackProgress.frame.size.height);
+            self.buttonsView.frame = CGRectMake(317, 165, self.buttonsView.frame.size.width, self.buttonsView.frame.size.height);
+            self.text.frame = CGRectMake(7, 223, 305, 70);
+            self.finalTextInsideBox.frame = CGRectMake(15, 223, 275, 70);
+            self.pageNumber.frame = CGRectMake(49, 9, self.pageNumber.frame.size.width, self.pageNumber.frame.size.height);
+            self.animalVoiceOnOff.frame = CGRectMake(381, 130, self.animalVoiceOnOff.frame.size.width, self.animalVoiceOnOff.frame.size.height);
+            self.animalVoice.frame = CGRectMake(373, 113, self.animalVoice.frame.size.width, self.animalVoice.frame.size.height);
+            
+            self.previousPageButton.frame = CGRectMake(0, 0, self.previousPageButton.frame.size.width, self.previousPageButton.frame.size.height);
+            self.nextPageButton.frame = CGRectMake(434, 0, self.nextPageButton.frame.size.width, self.nextPageButton.frame.size.height);
+
+
+            UIImage *image1 = [dataForPage valueForKey:@"image1_IPhone_Landscape"];;
+            CGRect image1Frame = CGRectFromString([dataForPage valueForKey:@"image1_IPhone_Landscape_Point"]);
+            self.image1.image = image1;
+            self.image1.frame = image1Frame;
+
+            UIImage *image2 = [dataForPage valueForKey:@"image2_IPhone_Landscape"];;
+            CGRect image2Frame = CGRectFromString([dataForPage valueForKey:@"image2_IPhone_Landscape_Point"]);
+            self.image2.image = image2;
+            self.image2.frame = image2Frame;
+            
+            UIImage *image3 = [dataForPage valueForKey:@"image3_IPhone_Landscape"];;
+            CGRect image3Frame = CGRectFromString([dataForPage valueForKey:@"image3_IPhone_Landscape_Point"]);
+            self.image3.image = image3;
+            self.image3.frame = image3Frame;
+            
+            UIImage *image4 = [dataForPage valueForKey:@"image4_IPhone_Landscape"];;
+            CGRect image4Frame = CGRectFromString([dataForPage valueForKey:@"image4_IPhone_Landscape_Point"]);
+            self.image4.image = image4;
+            self.image4.frame = image4Frame;
+            
+            UIImage *image5 = [dataForPage valueForKey:@"image5_IPhone_Landscape"];;
+            CGRect image5Frame = CGRectFromString([dataForPage valueForKey:@"image5_IPhone_Landscape_Point"]);
+            self.image5.image = image5;
+            self.image5.frame = image5Frame;
+            
+            UIImage *image6 = [dataForPage valueForKey:@"image6_IPhone_Landscape"];;
+            CGRect image6Frame = CGRectFromString([dataForPage valueForKey:@"image6_IPhone_Landscape_Point"]);
+            self.image6.image = image6;
+            self.image6.frame = image6Frame;
+            
+            UIImage *image7 = [dataForPage valueForKey:@"image7_IPhone_Landscape"];;
+            CGRect image7Frame = CGRectFromString([dataForPage valueForKey:@"image7_IPhone_Landscape_Point"]);
+            self.image7.image = image7;
+            self.image7.frame = image7Frame;
+            
+            
+            
+
+            
+        } else {
+            // iPad Gorizontal
+            self.playStop.frame = CGRectMake(888, 370, self.playStop.frame.size.width, self.playStop.frame.size.height);
+            self.playbackProgress.frame = CGRectMake(888, 450, self.playbackProgress.frame.size.width, self.playbackProgress.frame.size.height);
+            self.buttonsView.frame = CGRectMake(763, 487, self.buttonsView.frame.size.width, self.buttonsView.frame.size.height);
+            self.text.frame = CGRectMake(20, 573, 735, 155);
+            self.finalTextInsideBox.frame = CGRectMake(35, 586, 703, 126);
+            self.pageNumber.frame = CGRectMake(108, 27, self.pageNumber.frame.size.width, self.pageNumber.frame.size.height);
+            self.animalVoiceOnOff.frame = CGRectMake(885, 335, self.animalVoiceOnOff.frame.size.width, self.animalVoiceOnOff.frame.size.height);
+            self.animalVoice.frame = CGRectMake(845, 305, self.animalVoice.frame.size.width, self.animalVoice.frame.size.height);
+            
+            self.previousPageButton.frame = CGRectMake(20, 7, self.previousPageButton.frame.size.width, self.previousPageButton.frame.size.height);
+            self.nextPageButton.frame = CGRectMake(917, 7, self.nextPageButton.frame.size.width, self.nextPageButton.frame.size.height);
+
+            UIImage *image1 = [dataForPage valueForKey:@"image1_IPad_Landscape"];;
+            CGRect image1Frame = CGRectFromString([dataForPage valueForKey:@"image1_IPad_Landscape_Point"]);
+            self.image1.image = image1;
+            self.image1.frame = image1Frame;
+            
+            UIImage *image2 = [dataForPage valueForKey:@"image2_IPad_Landscape"];;
+            CGRect image2Frame = CGRectFromString([dataForPage valueForKey:@"image2_IPad_Landscape_Point"]);
+            self.image2.image = image2;
+            self.image2.frame = image2Frame;
+            
+            UIImage *image3 = [dataForPage valueForKey:@"image3_IPad_Landscape"];;
+            CGRect image3Frame = CGRectFromString([dataForPage valueForKey:@"image3_IPad_Landscape_Point"]);
+            self.image3.image = image3;
+            self.image3.frame = image3Frame;
+            
+            UIImage *image4 = [dataForPage valueForKey:@"image4_IPad_Landscape"];;
+            CGRect image4Frame = CGRectFromString([dataForPage valueForKey:@"image4_IPad_Landscape_Point"]);
+            self.image4.image = image4;
+            self.image4.frame = image4Frame;
+            
+            UIImage *image5 = [dataForPage valueForKey:@"image5_IPad_Landscape"];;
+            CGRect image5Frame = CGRectFromString([dataForPage valueForKey:@"image5_IPad_Landscape_Point"]);
+            self.image5.image = image5;
+            self.image5.frame = image5Frame;
+            
+            UIImage *image6 = [dataForPage valueForKey:@"image6_IPad_Landscape"];;
+            CGRect image6Frame = CGRectFromString([dataForPage valueForKey:@"image6_IPad_Landscape_Point"]);
+            self.image6.image = image6;
+            self.image6.frame = image6Frame;
+            
+            UIImage *image7 = [dataForPage valueForKey:@"image7_IPad_Landscape"];;
+            CGRect image7Frame = CGRectFromString([dataForPage valueForKey:@"image7_IPad_Landscape_Point"]);
+            self.image7.image = image7;
+            self.image7.frame = image7Frame;
+
+        }
 
     }
     else { 
-        [self.image setImage:imagePortrait];
         [self.imageBackground setImage:imagePortraitBackground];
-        //NSLog(@"frame of imagePortraitBackground:%@",NSStringFromCGRect(self.imageBackground.frame));
+        [self.image setImage:imagePortrait];
+        
+        if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
+            //iPhone Vertical/Portrailt
+            
+            self.playStop.frame = CGRectMake(236, 195, self.playStop.frame.size.width, self.playStop.frame.size.height);
+            self.playbackProgress.frame = CGRectMake(236, 184, self.playbackProgress.frame.size.width, self.playbackProgress.frame.size.height);
+            self.buttonsView.frame = CGRectMake(163, 282, self.buttonsView.frame.size.width, self.buttonsView.frame.size.height);
+            self.text.frame = CGRectMake(6, 282, 163, 135);
+            self.finalTextInsideBox.frame = CGRectMake(13, 288, 156, 129);
+            self.pageNumber.frame = CGRectMake(146, 432, self.pageNumber.frame.size.width, self.pageNumber.frame.size.height);
+            self.animalVoiceOnOff.frame = CGRectMake(52, 430, self.animalVoiceOnOff.frame.size.width, self.animalVoiceOnOff.frame.size.height);
+            self.animalVoice.frame = CGRectMake(44, 413, self.animalVoice.frame.size.width, self.animalVoice.frame.size.height);
+            self.previousPageButton.frame = CGRectMake(0, 423, self.previousPageButton.frame.size.width, self.previousPageButton.frame.size.height);
+            self.nextPageButton.frame = CGRectMake(273, 423, self.nextPageButton.frame.size.width, self.nextPageButton.frame.size.height);
 
+            // prepare images for animals:
+           // UIImage *image1 = [dataForPage valueForKey:@"image1_IPhone_Portrait"];;
+            UIImage *image1 = [dataForPage valueForKey:@"image1_IPhone_Portrait"];;
+            CGRect image1Frame = CGRectFromString([dataForPage valueForKey:@"image1_IPhone_Portrait_Point"]);
+            self.image1.image = image1;
+            self.image1.frame = image1Frame;
+            
+            UIImage *image2 = [dataForPage valueForKey:@"image2_IPhone_Portrait"];;
+            CGRect image2Frame = CGRectFromString([dataForPage valueForKey:@"image2_IPhone_Portrait_Point"]);
+            self.image2.image = image2;
+            self.image2.frame = image2Frame;
+            
+            UIImage *image3 = [dataForPage valueForKey:@"image3_IPhone_Portrait"];;
+            CGRect image3Frame = CGRectFromString([dataForPage valueForKey:@"image3_IPhone_Portrait_Point"]);
+            self.image3.image = image3;
+            self.image3.frame = image3Frame;
+            
+            UIImage *image4 = [dataForPage valueForKey:@"image4_IPhone_Portrait"];;
+            CGRect image4Frame = CGRectFromString([dataForPage valueForKey:@"image4_IPhone_Portrait_Point"]);
+            self.image4.image = image4;
+            self.image4.frame = image4Frame;
+            
+            UIImage *image5 = [dataForPage valueForKey:@"image5_IPhone_Portrait"];;
+            CGRect image5Frame = CGRectFromString([dataForPage valueForKey:@"image5_IPhone_Portrait_Point"]);
+            self.image5.image = image5;
+            self.image5.frame = image5Frame;
+            
+            UIImage *image6 = [dataForPage valueForKey:@"image6_IPhone_Portrait"];;
+            CGRect image6Frame = CGRectFromString([dataForPage valueForKey:@"image6_IPhone_Portrait_Point"]);
+            self.image6.image = image6;
+            self.image6.frame = image6Frame;
+            
+            UIImage *image7 = [dataForPage valueForKey:@"image7_IPhone_Portrait"];;
+            CGRect image7Frame = CGRectFromString([dataForPage valueForKey:@"image7_IPhone_Portrait_Point"]);
+            self.image7.image = image7;
+            self.image7.frame = image7Frame;
+
+            
+
+        } else {
+            //iPad Vertical
+            self.playStop.frame = CGRectMake(619, 543, self.playStop.frame.size.width, self.playStop.frame.size.height);
+            self.playbackProgress.frame = CGRectMake(619, 623, self.playbackProgress.frame.size.width, self.playbackProgress.frame.size.height);
+            self.buttonsView.frame = CGRectMake(507, 666, self.buttonsView.frame.size.width, self.buttonsView.frame.size.height);
+            self.text.frame = CGRectMake(20, 666, 479, 241);
+            self.finalTextInsideBox.frame = CGRectMake(45, 679, 443, 228);
+            self.pageNumber.frame = CGRectMake(280, 929, self.pageNumber.frame.size.width, self.pageNumber.frame.size.height);
+            self.animalVoiceOnOff.frame = CGRectMake(148, 959, self.animalVoiceOnOff.frame.size.width, self.animalVoiceOnOff.frame.size.height);
+            self.animalVoice.frame = CGRectMake(108, 929, self.animalVoice.frame.size.width, self.animalVoice.frame.size.height);
+            
+            self.previousPageButton.frame = CGRectMake(7, 918, self.previousPageButton.frame.size.width, self.previousPageButton.frame.size.height);
+            self.nextPageButton.frame = CGRectMake(674, 918, self.nextPageButton.frame.size.width, self.nextPageButton.frame.size.height);
+
+            
+            UIImage *image1 = [dataForPage valueForKey:@"image1_IPad_Portrait"];;
+            CGRect image1Frame = CGRectFromString([dataForPage valueForKey:@"image1_IPad_Portrait_Point"]);
+            self.image1.image = image1;
+            self.image1.frame = image1Frame;
+            
+            UIImage *image2 = [dataForPage valueForKey:@"image2_IPad_Portrait"];;
+            CGRect image2Frame = CGRectFromString([dataForPage valueForKey:@"image2_IPad_Portrait_Point"]);
+            self.image2.image = image2;
+            self.image2.frame = image2Frame;
+            
+            UIImage *image3 = [dataForPage valueForKey:@"image3_IPad_Portrait"];;
+            CGRect image3Frame = CGRectFromString([dataForPage valueForKey:@"image3_IPad_Portrait_Point"]);
+            self.image3.image = image3;
+            self.image3.frame = image3Frame;
+            
+            UIImage *image4 = [dataForPage valueForKey:@"image4_IPad_Portrait"];;
+            CGRect image4Frame = CGRectFromString([dataForPage valueForKey:@"image4_IPad_Portrait_Point"]);
+            self.image4.image = image4;
+            self.image4.frame = image4Frame;
+            
+            UIImage *image5 = [dataForPage valueForKey:@"image5_IPad_Portrait"];;
+            CGRect image5Frame = CGRectFromString([dataForPage valueForKey:@"image5_IPad_Portrait_Point"]);
+            self.image5.image = image5;
+            self.image5.frame = image5Frame;
+            
+            UIImage *image6 = [dataForPage valueForKey:@"image6_IPad_Portrait"];;
+            CGRect image6Frame = CGRectFromString([dataForPage valueForKey:@"image6_IPad_Portrait_Point"]);
+            self.image6.image = image6;
+            self.image6.frame = image6Frame;
+            
+            UIImage *image7 = [dataForPage valueForKey:@"image7_IPad_Portrait"];;
+            CGRect image7Frame = CGRectFromString([dataForPage valueForKey:@"image7_IPad_Portrait_Point"]);
+            self.image7.image = image7;
+            self.image7.frame = image7Frame;
+
+        }
+
+        //NSLog(@"frame of imageBackground:%@",NSStringFromCGRect(self.imageBackground.frame));
+        //NSLog(@"frame of image:%@",NSStringFromCGRect(self.image.frame));
+        
     }
-    
+
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //self.dataLabel.text = [self.dataObject description];
+    [self prepareAllImagesForInterfaceOrientation:self.interfaceOrientation];
     NSString *pageNumberDelimiter = nil;
     
     if (!self.currentSelectedFlagTag) { 
@@ -201,38 +458,6 @@
     }
     else [self startAnimationForFlagsForSelectedTag:self.currentSelectedFlagTag.unsignedIntegerValue forFirstStart:NO];
 
-    
-//    BOOL isReverseShow = NO;
-//    
-//    if (self.currentSelectedFlagTag.unsignedIntegerValue == 0 || self.currentSelectedFlagTag.unsignedIntegerValue == 5) { 
-//        pageNumberDelimiter = @"из";
-//    }
-//    
-//    if (self.currentSelectedFlagTag.unsignedIntegerValue == 1 || self.currentSelectedFlagTag.unsignedIntegerValue == 2) { 
-//        pageNumberDelimiter = @"from";
-//    }
-//    
-//    if (self.currentSelectedFlagTag.unsignedIntegerValue == 3) { 
-//        pageNumberDelimiter = @"de";
-//    }
-//
-//    if (self.currentSelectedFlagTag.unsignedIntegerValue == 4) { 
-//        pageNumberDelimiter = @" من";
-//        isReverseShow = YES;
-//        
-//    }
-//    if (self.currentSelectedFlagTag.unsignedIntegerValue == 6) { 
-//        pageNumberDelimiter = @"von";
-//    }
-//    
-//    NSString *page = [dataForPage valueForKey:@"page"];
-//    
-//    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-//    NSNumber *pageNumber = [formatter numberFromString:page];
-//    formatter.locale = [NSLocale currentLocale];
-//    
-//    if (isReverseShow) self.pageNumber.text = [NSString stringWithFormat:@"%@ %@ %@",[formatter stringFromNumber:[NSNumber numberWithInt:16]],pageNumberDelimiter,[formatter stringFromNumber:pageNumber]];
-//        else self.pageNumber.text = [NSString stringWithFormat:@"%@ %@ %@",[formatter stringFromNumber:pageNumber],pageNumberDelimiter,[formatter stringFromNumber:[NSNumber numberWithInt:16]]];
 
 }
 - (void)viewWillDisappear:(BOOL)animated
@@ -242,74 +467,77 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    NSDictionary *dataForPage = self.dataObject;
-    UIImage *imageLandscape = nil;
-    UIImage *imagePortrait = nil;
-    //NSLog(@"data for page:%@",dataForPage);
-    UIImage *imageLandscapeBackground = nil;
-    UIImage *imagePortraitBackground = nil;
+    [self prepareAllImagesForInterfaceOrientation:interfaceOrientation];
 
-    if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
-        imageLandscape = [dataForPage valueForKey:@"imageIphoneLandscape"];
-        imagePortrait = [dataForPage valueForKey:@"imageIphonePortrait"];
-        imageLandscapeBackground = [UIImage imageNamed:@"page00GIPhone.png"];
-        imagePortraitBackground = [UIImage imageNamed:@"page00VIPhone.png"];
-
-    } else {
-        imageLandscape = [dataForPage valueForKey:@"imageIPadLandscape"];
-        imagePortrait = [dataForPage valueForKey:@"imageIPadPortrait"];
-        imageLandscapeBackground = [UIImage imageNamed:@"page00GIPad.png"];
-        imagePortraitBackground = [UIImage imageNamed:@"page00VIPad.png"];
-
-    }
-    if (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight) { 
-        [self.image setImage:imageLandscape];
-        [self.imageBackground setImage:imageLandscapeBackground];
-
-        if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
-            //iPhone
-            self.playStop.frame = CGRectMake(385, 17, self.playStop.frame.size.width, self.playStop.frame.size.height);
-            self.playbackProgress.frame = CGRectMake(385, 0, self.playbackProgress.frame.size.width, self.playbackProgress.frame.size.height);
-            self.buttonsView.frame = CGRectMake(320, 130, self.buttonsView.frame.size.width, self.buttonsView.frame.size.height);
-            self.text.frame = CGRectMake(7, 203, 305, 70);
-            self.finalTextInsideBox.frame = CGRectMake(7, 203, 303, 70);
-            self.pageNumber.frame = CGRectMake(7, - 20, self.pageNumber.frame.size.width, self.pageNumber.frame.size.height);
-        } else {
-            // iPad
-            self.playStop.frame = CGRectMake(888, 349, self.playStop.frame.size.width, self.playStop.frame.size.height);
-            self.playbackProgress.frame = CGRectMake(888, 429, self.playbackProgress.frame.size.width, self.playbackProgress.frame.size.height);
-            self.buttonsView.frame = CGRectMake(763, 466, self.buttonsView.frame.size.width, self.buttonsView.frame.size.height);
-            self.text.frame = CGRectMake(20, 552, 735, 155);
-            self.finalTextInsideBox.frame = CGRectMake(35, 565, 703, 126);
-            self.pageNumber.frame = CGRectMake(20, - 20, self.pageNumber.frame.size.width, self.pageNumber.frame.size.height);
-
-        }
-    }
-    else { 
-        [self.image setImage:imagePortrait];
-        [self.imageBackground setImage:imagePortraitBackground];
-
-        if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
-            //iPhone
-            
-            self.playStop.frame = CGRectMake(236, 178, self.playStop.frame.size.width, self.playStop.frame.size.height);
-            self.playbackProgress.frame = CGRectMake(236, 253, self.playbackProgress.frame.size.width, self.playbackProgress.frame.size.height);
-            self.buttonsView.frame = CGRectMake(163, 270, self.buttonsView.frame.size.width, self.buttonsView.frame.size.height);
-            self.text.frame = CGRectMake(6, 270, 163, 152);
-            self.finalTextInsideBox.frame = CGRectMake(13, 276, 156, 146);
-            self.pageNumber.frame = CGRectMake(111, 420, self.pageNumber.frame.size.width, self.pageNumber.frame.size.height);
-
-        } else {
-            //iPad
-            self.playStop.frame = CGRectMake(619, 543, self.playStop.frame.size.width, self.playStop.frame.size.height);
-            self.playbackProgress.frame = CGRectMake(619, 623, self.playbackProgress.frame.size.width, self.playbackProgress.frame.size.height);
-            self.buttonsView.frame = CGRectMake(507, 666, self.buttonsView.frame.size.width, self.buttonsView.frame.size.height);
-            self.text.frame = CGRectMake(20, 666, 479, 241);
-            self.finalTextInsideBox.frame = CGRectMake(45, 679, 443, 228);
-            self.pageNumber.frame = CGRectMake(280, 924, self.pageNumber.frame.size.width, self.pageNumber.frame.size.height);
-
-        }
-    }
+//    NSDictionary *dataForPage = self.dataObject;
+//    UIImage *imageLandscape = nil;
+//    UIImage *imagePortrait = nil;
+//    //NSLog(@"data for page:%@",dataForPage);
+//    UIImage *imageLandscapeBackground = nil;
+//    UIImage *imagePortraitBackground = nil;
+//    if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
+//        imageLandscape = [dataForPage valueForKey:@"image_IPhoneLandscape"];
+//        imagePortrait = [dataForPage valueForKey:@"image_IPhonePortrait"];
+//        
+//        imageLandscapeBackground = [UIImage imageNamed:@"page00GIPhone.png"];
+//        imagePortraitBackground = [UIImage imageNamed:@"page00VIPhone.png"];
+//        
+//        
+//    } else {
+//        imageLandscape = [dataForPage valueForKey:@"image_IPadLandscape"];
+//        imagePortrait = [dataForPage valueForKey:@"image_IPadPortrait"];
+//        imageLandscapeBackground = [UIImage imageNamed:@"page00GIPad.png"];
+//        imagePortraitBackground = [UIImage imageNamed:@"page00VIPad.png"];
+//    }
+//    
+//    if (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight) { 
+//        [self.image setImage:imageLandscape];
+//        [self.imageBackground setImage:imageLandscapeBackground];
+//
+//        if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
+//            //iPhone
+//            self.playStop.frame = CGRectMake(385, 17, self.playStop.frame.size.width, self.playStop.frame.size.height);
+//            self.playbackProgress.frame = CGRectMake(385, 0, self.playbackProgress.frame.size.width, self.playbackProgress.frame.size.height);
+//            self.buttonsView.frame = CGRectMake(320, 130, self.buttonsView.frame.size.width, self.buttonsView.frame.size.height);
+//            self.text.frame = CGRectMake(7, 203, 305, 70);
+//            self.finalTextInsideBox.frame = CGRectMake(7, 203, 303, 70);
+//            self.pageNumber.frame = CGRectMake(7, - 20, self.pageNumber.frame.size.width, self.pageNumber.frame.size.height);
+//        } else {
+//            // iPad
+//            self.playStop.frame = CGRectMake(888, 349, self.playStop.frame.size.width, self.playStop.frame.size.height);
+//            self.playbackProgress.frame = CGRectMake(888, 429, self.playbackProgress.frame.size.width, self.playbackProgress.frame.size.height);
+//            self.buttonsView.frame = CGRectMake(763, 466, self.buttonsView.frame.size.width, self.buttonsView.frame.size.height);
+//            self.text.frame = CGRectMake(20, 552, 735, 155);
+//            self.finalTextInsideBox.frame = CGRectMake(35, 565, 703, 126);
+//            self.pageNumber.frame = CGRectMake(20, - 20, self.pageNumber.frame.size.width, self.pageNumber.frame.size.height);
+//
+//        }
+//    }
+//    else { 
+//        [self.image setImage:imagePortrait];
+//        [self.imageBackground setImage:imagePortraitBackground];
+//
+//        if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
+//            //iPhone
+//            
+//            self.playStop.frame = CGRectMake(236, 178, self.playStop.frame.size.width, self.playStop.frame.size.height);
+//            self.playbackProgress.frame = CGRectMake(236, 253, self.playbackProgress.frame.size.width, self.playbackProgress.frame.size.height);
+//            self.buttonsView.frame = CGRectMake(163, 270, self.buttonsView.frame.size.width, self.buttonsView.frame.size.height);
+//            self.text.frame = CGRectMake(6, 270, 163, 152);
+//            self.finalTextInsideBox.frame = CGRectMake(13, 276, 156, 146);
+//            self.pageNumber.frame = CGRectMake(111, 420, self.pageNumber.frame.size.width, self.pageNumber.frame.size.height);
+//
+//        } else {
+//            //iPad
+//            self.playStop.frame = CGRectMake(619, 543, self.playStop.frame.size.width, self.playStop.frame.size.height);
+//            self.playbackProgress.frame = CGRectMake(619, 623, self.playbackProgress.frame.size.width, self.playbackProgress.frame.size.height);
+//            self.buttonsView.frame = CGRectMake(507, 666, self.buttonsView.frame.size.width, self.buttonsView.frame.size.height);
+//            self.text.frame = CGRectMake(20, 666, 479, 241);
+//            self.finalTextInsideBox.frame = CGRectMake(45, 679, 443, 228);
+//            self.pageNumber.frame = CGRectMake(280, 924, self.pageNumber.frame.size.width, self.pageNumber.frame.size.height);
+//
+//        }
+//    }
 
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
@@ -321,48 +549,52 @@
     NSArray *viewControllers = nil;
     
     NSUInteger indexOfCurrentViewController = [self.modelController indexOfViewController:self];
-    if (indexOfCurrentViewController == 0 || indexOfCurrentViewController % 3 == 0) {
-        UIViewController *nextViewController = [self.modelController pageViewController:self.modelController.pageViewController viewControllerBeforeViewController:self];
-        viewControllers = [NSArray arrayWithObjects:self, nextViewController, nil];
+    if (indexOfCurrentViewController == 0) {
+        // do nothing for previous from zero
+//        UIViewController *nextViewController = [self.modelController pageViewController:self.modelController.pageViewController viewControllerBeforeViewController:self];
+//        viewControllers = [NSArray arrayWithObjects:self, nextViewController, nil];
     } else {
-        UIViewController *previousViewController = [self.modelController pageViewController:self.modelController.pageViewController viewControllerAfterViewController:self];
+        UIViewController *previousViewController = [self.modelController pageViewController:self.modelController.pageViewController viewControllerBeforeViewController:self];
         viewControllers = [NSArray arrayWithObjects:previousViewController, self, nil];
+        [self.modelController.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:NULL];
+
     }
-    [self.modelController.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:NULL];
 
 }
 
 - (IBAction)nextPageStart:(id)sender {
     
-//    NSUInteger retreivedIndex = [self.modelController indexOfViewController:self];
-//    NSArray *viewControllers = nil;
-//
+    NSUInteger retreivedIndex = [self.modelController indexOfViewController:self];
+    NSArray *viewControllers = nil;
+//    
 //    NSUInteger indexOfCurrentViewController = [self.modelController indexOfViewController:self];
-//    if (indexOfCurrentViewController == 0 || indexOfCurrentViewController > 0 || indexOfCurrentViewController < 3) {
+//    if (indexOfCurrentViewController == 0 || indexOfCurrentViewController > 0 || indexOfCurrentViewController < 17) {
 //        NSLog(@"NEXT PAGE current controlle:%u",indexOfCurrentViewController);
-//
+//        
 //        UIViewController *nextViewController = [self.modelController pageViewController:self.modelController.pageViewController viewControllerAfterViewController:self];
 //        viewControllers = [NSArray arrayWithObjects:self, nextViewController, nil];
 //        [self.modelController.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:NULL];
-//
+//        
 //    } else {
 //        NSLog(@"DO NOTHING TO NEXT");
-////        UIViewController *previousViewController = [self.modelController pageViewController:self.modelController.pageViewController viewControllerBeforeViewController:self];
-//        viewControllers = [NSArray arrayWithObjects:previousViewController, self, nil];
+//        //        UIViewController *previousViewController = [self.modelController pageViewController:self.modelController.pageViewController viewControllerBeforeViewController:self];
+//        //        viewControllers = [NSArray arrayWithObjects:previousViewController, self, nil];
 //    }
-
-//    if (retreivedIndex < 3){
-//        
-//        //get the page to go to
- //       DataViewController *targetPageViewController = [self.modelController viewControllerAtIndex:(retreivedIndex + 1) storyboard:self.storyboard];
-//        
-//        //put it(or them if in landscape view) in an array
-   //     NSArray *theViewControllers = nil;    
-   //     theViewControllers = [NSArray arrayWithObjects:targetPageViewController, nil];
-//        
-//        //add page view
-//        
-  //  }
+    
+    if (retreivedIndex < 17){
+        
+        //get the page to go to
+        UIViewController *previousViewController = [self.modelController pageViewController:self.modelController.pageViewController viewControllerAfterViewController:self];
+        viewControllers = [NSArray arrayWithObjects:previousViewController, self, nil];
+        [self.modelController.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:NULL];
+        
+        //put it(or them if in landscape view) in an array
+//        NSArray *theViewControllers = nil;    
+//        theViewControllers = [NSArray arrayWithObjects:targetPageViewController, nil];
+        
+        //add page view
+        
+    }
 }
 
 - (IBAction)flagStart:(id)sender {
@@ -469,8 +701,8 @@ static inline double radians (double degrees) { return degrees * M_PI/180; }
     
 //    if (isReverseShow == YES) self.pageNumber.text = [NSString stringWithFormat:@"%@ %@ %@",[formatter stringFromNumber:[NSNumber numberWithInt:16]],pageNumberDelimiter,[formatter stringFromNumber:pageNumber]];
 //    else 
-        self.pageNumber.text = [NSString stringWithFormat:@"%@ %@ %@",[formatter stringFromNumber:pageNumber],pageNumberDelimiter,[formatter stringFromNumber:[NSNumber numberWithInt:16]]];
-
+    self.pageNumber.text = [NSString stringWithFormat:@"%@ %@ %@",[formatter stringFromNumber:pageNumber],pageNumberDelimiter,[formatter stringFromNumber:[NSNumber numberWithInt:16]]];
+    
 //    NSLog(@">>>>>>>>>>>>%@",[NSString stringWithFormat:@"%@ %@ %@",[formatter stringFromNumber:[NSNumber numberWithInt:16]],pageNumberDelimiter,[formatter stringFromNumber:pageNumber]]);
     
     
@@ -813,6 +1045,9 @@ static inline double radians (double degrees) { return degrees * M_PI/180; }
     
     [UIView commitAnimations];
 
+}
+- (IBAction)animalVoiceChange:(id)sender {
+    
 }
 
 @end

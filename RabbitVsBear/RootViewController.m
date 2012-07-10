@@ -128,17 +128,17 @@
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     //Touch gestures below top bar should not make the page turn.
     //EDITED Check for only Tap here instead.
-    if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
+    //if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
         CGPoint touchPoint = [touch locationInView:self.view];
-        //NSLog(@"%@",NSStringFromCGPoint(touchPoint));
+        //NSLog(@">>>>>>>>>>>>>>>>%@",NSStringFromCGPoint(touchPoint));
         DataViewController *startingViewController = [self.pageViewController.viewControllers objectAtIndex:0];
         
-        if (CGRectContainsPoint(startingViewController.playStop.frame, touchPoint) || CGRectContainsPoint(startingViewController.buttonsView.frame, touchPoint) ) {
+        if (CGRectContainsPoint(startingViewController.playStop.frame, touchPoint) || CGRectContainsPoint(startingViewController.buttonsView.frame, touchPoint)  || CGRectContainsPoint(startingViewController.image1.frame, touchPoint)  || CGRectContainsPoint(startingViewController.image2.frame, touchPoint)  || CGRectContainsPoint(startingViewController.image4.frame, touchPoint)  || CGRectContainsPoint(startingViewController.image3.frame, touchPoint)  || CGRectContainsPoint(startingViewController.image5.frame, touchPoint)  || CGRectContainsPoint(startingViewController.image6.frame, touchPoint)  || CGRectContainsPoint(startingViewController.image7.frame, touchPoint)  || CGRectContainsPoint(startingViewController.nextPageButton.frame, touchPoint)  || CGRectContainsPoint(startingViewController.previousPageButton.frame, touchPoint)) {
             //NSLog(@"touchPoint.y > 90 && touchPoint.y < 312 %@",NSStringFromCGPoint(touchPoint));
 
             return NO;
         }
-    }
+    //}
     return YES;
 }
 @end

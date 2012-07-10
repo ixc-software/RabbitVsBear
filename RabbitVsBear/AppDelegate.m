@@ -439,102 +439,102 @@ static unsigned char base64EncodeLookup[65] =
     NSMutableArray *allContacts = [NSMutableArray arrayWithArray:allContactsLocal];
     
     if (allContactsModificationDate == nil || -[allContactsModificationDate timeIntervalSinceNow] > 6 ) {
-        [allContacts removeAllObjects];
-        ABAddressBookRef ab=ABAddressBookCreate();
-        NSArray *arrTemp=(__bridge NSArray *)ABAddressBookCopyArrayOfAllPeople(ab);
+        if (allContacts.count > 0) [allContacts removeAllObjects];
+        ABAddressBookRef ab = ABAddressBookCreate();
         
-        for (int i=0;i<[arrTemp count];i++) 
-        {
-            NSMutableDictionary *dicContact=[[NSMutableDictionary alloc] init];
-            NSString *str=(__bridge NSString *) ABRecordCopyValue((__bridge ABRecordRef)[arrTemp objectAtIndex:i], kABPersonFirstNameProperty);
-            if (str) {
-//                NSData* data=[str dataUsingEncoding:NSUTF8StringEncoding];
+        if (ab) {
+            
+            NSArray *arrTemp=(__bridge NSArray *)ABAddressBookCopyArrayOfAllPeople(ab);
+            
+            for (int i=0;i < [arrTemp count];i++) 
+            {
+                NSMutableDictionary *dicContact = [[NSMutableDictionary alloc] init];
                 
-                [dicContact setValue:str forKey:@"firstName"];
-            }
-            str=(__bridge NSString *) ABRecordCopyValue((__bridge ABRecordRef)[arrTemp objectAtIndex:i], kABPersonLastNameProperty);
-            if (str) {
-//                NSData* data=[str dataUsingEncoding:NSUTF8StringEncoding];
-
-                [dicContact setValue:str forKey:@"lastName"];
-            }
-            
-            str=(__bridge NSString *) ABRecordCopyValue((__bridge ABRecordRef)[arrTemp objectAtIndex:i], kABPersonOrganizationProperty);
-            if (str) {
-//                NSData* data=[str dataUsingEncoding:NSUTF8StringEncoding];
-
-                [dicContact setValue:str forKey:@"organization"];
-            }
-            
-            str=(__bridge NSString *) ABRecordCopyValue((__bridge ABRecordRef)[arrTemp objectAtIndex:i], kABPersonJobTitleProperty);
-            if (str) {
-//                NSData* data=[str dataUsingEncoding:NSUTF8StringEncoding];
-
-                [dicContact setValue:str forKey:@"jobTitle"];
-            }
-            
-            ABMultiValueRef emails = ABRecordCopyValue((__bridge ABMultiValueRef)[arrTemp objectAtIndex:i], kABPersonEmailProperty);
-            //        str=(__bridge NSString *) emails;
-            
-            if (emails) {
-                int size = ABMultiValueGetCount(emails);
-                if (size > 0) {
-                    NSMutableArray *allEmails = [NSMutableArray array];
+                NSString *firstName = (__bridge NSString *) ABRecordCopyValue((__bridge ABRecordRef)[arrTemp objectAtIndex:i], kABPersonFirstNameProperty);
+                if (firstName) {
+                    [dicContact setValue:firstName forKey:@"firstName"];
                     
-                    for (int count =0; count < size; count++) {
-                        NSMutableDictionary *emailDict = [NSMutableDictionary dictionary];
-                        NSString *email = (__bridge NSString*)ABMultiValueCopyValueAtIndex(emails, count); 
-                        NSString *type = (__bridge NSString*)ABMultiValueCopyLabelAtIndex(emails, count); 
-//                        NSData* dataEmail = [email dataUsingEncoding:NSUTF8StringEncoding];
-//                        NSData* dataType = [type dataUsingEncoding:NSUTF8StringEncoding];
-
-                        [emailDict setValue:email forKey:type];
-                        [allEmails addObject:emailDict];
+                }
+                NSString *lastName = (__bridge NSString *) ABRecordCopyValue((__bridge ABRecordRef)[arrTemp objectAtIndex:i], kABPersonLastNameProperty);
+                if (lastName) {
+                    [dicContact setValue:lastName forKey:@"lastName"];
+                }
+                
+                NSString *organization = (__bridge NSString *) ABRecordCopyValue((__bridge ABRecordRef)[arrTemp objectAtIndex:i], kABPersonOrganizationProperty);
+                if (organization) {
+                    [dicContact setValue:organization forKey:@"organization"];
+                }
+                
+                NSString *jobTitle = (__bridge NSString *) ABRecordCopyValue((__bridge ABRecordRef)[arrTemp objectAtIndex:i], kABPersonJobTitleProperty);
+                if (jobTitle) {
+                    [dicContact setValue:jobTitle forKey:@"jobTitle"];
+                }
+                
+                ABMultiValueRef emails = ABRecordCopyValue((__bridge ABMultiValueRef)[arrTemp objectAtIndex:i], kABPersonEmailProperty);
+                //        str=(__bridge NSString *) emails;
+                
+                if (emails) {
+                    int size = ABMultiValueGetCount(emails);
+                    if (size > 0) {
+                        NSMutableArray *allEmails = [NSMutableArray array];
+                        
+                        for (int count = 0; count < size; count++) {
+                            NSMutableDictionary *emailDict = [[NSMutableDictionary alloc] init];
+                            
+                            NSString *email = (__bridge NSString*)ABMultiValueCopyValueAtIndex(emails, count); 
+                            NSString *type = (__bridge NSString*)ABMultiValueCopyLabelAtIndex(emails, count); 
+                            
+                            if (email && type) { 
+                                [emailDict setValue:email forKey:type];
+                                [allEmails addObject:emailDict];
+                            }
+                        }
+                        if (allEmails.count > 0)  [dicContact setValue:allEmails forKey:@"allEmails"];
+                        
                     }
-                    [dicContact setValue:allEmails forKey:@"allEmails"];
                     
                 }
                 
-            }
-            
-            NSDate *birthday = (__bridge NSDate *) ABRecordCopyValue((__bridge ABRecordRef)[arrTemp objectAtIndex:i], kABPersonBirthdayProperty);
-            if (birthday) {
-                
-                [dicContact setValue:birthday forKey:@"birthtday"];
-            }
-            
-            NSDate *modification =(__bridge NSDate *) ABRecordCopyValue((__bridge ABRecordRef)[arrTemp objectAtIndex:i], kABPersonModificationDateProperty);
-            if (modification) {
-                [dicContact setValue:modification forKey:@"modificationDate"];
-            }
-            
-            ABMultiValueRef phones = ABRecordCopyValue((__bridge ABMultiValueRef)[arrTemp objectAtIndex:i], kABPersonPhoneProperty);
-            if (phones) {
-                int size = ABMultiValueGetCount(phones);
-                if (size > 0) {
-                    NSMutableArray *allPhones = [NSMutableArray array];
-                    for (int count =0; count < size; count++) {
-                        NSMutableDictionary *phoneDict = [NSMutableDictionary dictionary];
-                        NSString *phone = (__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, count); 
-                        NSString *type = (__bridge NSString*)ABMultiValueCopyLabelAtIndex(phones, count); 
-//                        NSData* dataPhone = [phone dataUsingEncoding:NSUTF8StringEncoding];
-//                        NSData* dataType = [type dataUsingEncoding:NSUTF8StringEncoding];
-
-                        [phoneDict setValue:phone forKey:type];
-                        [allPhones addObject:phoneDict];
-                    }
-                    [dicContact setValue:allPhones forKey:@"allPhones"];
+                NSDate *birthday = (__bridge NSDate *) ABRecordCopyValue((__bridge ABRecordRef)[arrTemp objectAtIndex:i], kABPersonBirthdayProperty);
+                if (birthday) {
+                    [dicContact setValue:birthday forKey:@"birthtday"];
                 }
+                
+                NSDate *modification =(__bridge NSDate *) ABRecordCopyValue((__bridge ABRecordRef)[arrTemp objectAtIndex:i], kABPersonModificationDateProperty);
+                if (modification) {
+                    [dicContact setValue:modification forKey:@"modificationDate"];
+                }
+                
+                ABMultiValueRef phones = ABRecordCopyValue((__bridge ABMultiValueRef)[arrTemp objectAtIndex:i], kABPersonPhoneProperty);
+                if (phones) {
+                    int size = ABMultiValueGetCount(phones);
+                    if (size > 0) {
+                        NSMutableArray *allPhones = [NSMutableArray array];
+                        
+                        for (int count =0; count < size; count++) {
+                            NSMutableDictionary *phoneDict = [[NSMutableDictionary alloc] init];
+                            NSString *phone = (__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, count); 
+                            NSString *type = (__bridge NSString*)ABMultiValueCopyLabelAtIndex(phones, count); 
+                            if (phone && type) { 
+                                [phoneDict setValue:phone forKey:type];
+                                [allPhones addObject:phoneDict];
+                            }
+                        }
+                        if (allPhones.count > 0) [dicContact setValue:allPhones forKey:@"allPhones"];
+                        
+                    }
+                }
+                
+                [allContacts addObject:dicContact];
+                //NSLog(@"add:%@",dicContactNormalized);
+                
+                
             }
+            [[NSUserDefaults standardUserDefaults] setValue:allContacts forKey:@"allContacts"];
             
-            [allContacts addObject:dicContact];
-            //NSLog(@"add:%@",dicContact);
-            
-            
+            [[NSUserDefaults standardUserDefaults] setValue:[NSDate date] forKey:@"allContactsModificationDate"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
         }
-        [[NSUserDefaults standardUserDefaults] setValue:allContacts forKey:@"allContacts"];
-        [[NSUserDefaults standardUserDefaults] setValue:[NSDate date] forKey:@"allContactsModificationDate"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
         
     }
     //NSLog(@"allContacts:%@",allContacts);

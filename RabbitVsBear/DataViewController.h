@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
-
+#import "AVImageView.h"
 @class ModelController;
 
 @interface DataViewController : UIViewController <AVAudioPlayerDelegate>
@@ -41,5 +41,16 @@
 @property (nonatomic) IBOutlet UITextView *finalTextInsideBox;
 @property (nonatomic) IBOutlet UIProgressView *playbackProgress;
 @property (nonatomic) IBOutlet UILabel *pageNumber;
+@property (weak, nonatomic) IBOutlet AVImageView *image1;
+@property (weak, nonatomic) IBOutlet AVImageView *image2;
+@property (weak, nonatomic) IBOutlet AVImageView *image3;
+@property (weak, nonatomic) IBOutlet AVImageView *image4;
+@property (weak, nonatomic) IBOutlet AVImageView *image5;
+@property (weak, nonatomic) IBOutlet AVImageView *image6;
+@property (weak, nonatomic) IBOutlet AVImageView *image7;
+@property (weak, nonatomic) IBOutlet UILabel *animalVoice;
+@property (weak, nonatomic) IBOutlet UISwitch *animalVoiceOnOff;
+@property (weak, nonatomic) IBOutlet UIButton *previousPageButton;
+@property (weak, nonatomic) IBOutlet UIButton *nextPageButton;
 
 @end
