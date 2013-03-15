@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="12">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="12">
     <dependencies>
-        <deployment version="1280" defaultVersion="1296" identifier="iOS"/>
-        <development defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
+        <deployment version="1280" defaultVersion="1552" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
         <!--Data View Controller-->
         <scene sceneID="8">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="DataViewController" id="5" customClass="DataViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="page1VIPhone_fon.png" id="DtW-Rx-485">
                                 <rect key="frame" x="0.0" y="0.0" width="314" height="460"/>
@@ -221,7 +219,7 @@
                             </progressView>
                             <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="bOP-QF-Zn7">
                                 <rect key="frame" x="52" y="430" width="79" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                 <color key="onTintColor" red="0.16950939718902175" green="0.39476477581521741" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="animalVoiceChange:" destination="5" eventType="valueChanged" id="uWZ-Og-Mn4"/>
@@ -229,7 +227,7 @@
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kYd-2V-DdF">
                                 <rect key="frame" x="273" y="423" width="41" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" image="next.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -244,7 +242,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="j6S-GO-KlJ">
                                 <rect key="frame" x="0.0" y="423" width="41" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" image="previous.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -257,12 +255,17 @@
                                     <action selector="previousPageStart:" destination="5" eventType="touchUpInside" id="ZxA-vu-INc"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" style="whiteLarge" id="8CI-ud-hZ0">
+                                <rect key="frame" x="275" y="423" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </activityIndicatorView>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="animalVoice" destination="Ors-sc-KfI" id="sa8-aa-2oA"/>
                         <outlet property="animalVoiceOnOff" destination="bOP-QF-Zn7" id="s2h-IS-kfL"/>
                         <outlet property="buttonsView" destination="CZ0-XX-QFM" id="Pwb-tP-6iZ"/>
+                        <outlet property="downloadingProgress" destination="8CI-ud-hZ0" id="1jW-Jq-2Qk"/>
                         <outlet property="finalTextInsideBox" destination="bMh-cr-yzp" id="nND-CR-4gp"/>
                         <outlet property="flagAE" destination="Iy4-aN-f27" id="fMr-A3-rQl"/>
                         <outlet property="flagCN" destination="BdE-6D-wij" id="g7p-oX-hIi"/>
@@ -287,13 +290,13 @@
                         <outlet property="text" destination="LWU-4v-wFK" id="Smw-xp-Zwm"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="772" y="476"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="qyF-o1-Klk">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="TZF-pV-6BV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="forTest" id="dUO-Sy-pSK" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Rmj-RH-aoD">
                         <rect key="frame" x="0.0" y="20" width="480" height="300"/>
@@ -527,19 +530,23 @@
                                 <color key="progressTintColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="trackTintColor" red="0.48627454040000001" green="0.8078432083" blue="0.27843138579999999" alpha="1" colorSpace="deviceRGB"/>
                             </progressView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" style="whiteLarge" id="k5c-1L-sHW">
+                                <rect key="frame" x="436" y="0.0" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TZF-pV-6BV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1255" y="467"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="rV0-dO-A6C">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Zg2-Pz-ySW" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page2G" id="5bk-Fw-Dou" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eRA-lr-fzZ">
                         <rect key="frame" x="0.0" y="20" width="480" height="300"/>
@@ -751,13 +758,13 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zg2-Pz-ySW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1281" y="1016"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tq6-ER-EeF">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="abk-ps-4CF" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page3G" id="XPS-n8-YjY" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="q7F-gV-9pN">
                         <rect key="frame" x="0.0" y="20" width="480" height="300"/>
@@ -957,13 +964,13 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="abk-ps-4CF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1307" y="1658"/>
         </scene>
         <!--View Controller - page4G-->
         <scene sceneID="aov-8b-DF2">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="sxm-G7-cZq" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page4G" title="page4G" id="98t-YM-37K" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LMi-P1-o3Y">
                         <rect key="frame" x="0.0" y="20" width="480" height="300"/>
@@ -1175,13 +1182,13 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sxm-G7-cZq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1468" y="2263"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="hmu-xL-Ent">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2eV-mw-827" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page5G" id="fFO-JV-OO3" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aaq-l9-t90">
                         <rect key="frame" x="0.0" y="20" width="480" height="300"/>
@@ -1413,13 +1420,13 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2eV-mw-827" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1476" y="2939"/>
         </scene>
         <!--View Controller - page2-->
         <scene sceneID="IDK-JH-iME">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0f5-zl-kr6" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page2" title="page2" id="6zg-bX-TJC" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="drc-PH-rvy">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
@@ -1612,13 +1619,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0f5-zl-kr6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="766" y="1079"/>
         </scene>
         <!--View Controller - page3-->
         <scene sceneID="pVX-DW-SRz">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qPb-DP-FBO" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page3" title="page3" id="YTe-Zk-3Jf" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NVG-w3-HUl">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
@@ -1799,13 +1806,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qPb-DP-FBO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="766" y="1658"/>
         </scene>
         <!--View Controller - page4-->
         <scene sceneID="MaO-h2-duy">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QfT-RR-zvB" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page4" title="page4" id="fy1-CZ-tHm" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fjK-Du-fQc">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
@@ -1998,13 +2005,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QfT-RR-zvB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="766" y="2263"/>
         </scene>
         <!--View Controller - page5-->
         <scene sceneID="n8M-kd-xeI">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kWs-YW-KPy" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page5" title="page5" id="SlQ-UP-ufv" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yQ0-mc-udU">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
@@ -2205,13 +2212,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kWs-YW-KPy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="789" y="2878"/>
         </scene>
         <!--View Controller - page6-->
         <scene sceneID="ebX-xl-YLC">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HpL-Sh-5UG" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page6" title="page6" id="7Bq-Ol-RZ8" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ef2-0B-ibx">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
@@ -2404,13 +2411,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HpL-Sh-5UG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="812" y="3511"/>
         </scene>
         <!--View Controller - page7-->
         <scene sceneID="I1i-ws-C0H">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="o6P-5O-PvD" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page7" title="page7" id="CWd-ph-OVn" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Llu-n2-nHO">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
@@ -2591,13 +2598,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="o6P-5O-PvD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="818" y="4129"/>
         </scene>
         <!--View Controller - page8-->
         <scene sceneID="DUn-69-S9c">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IjH-gY-nLN" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page8" title="page8" id="ykC-NB-Mka" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sYC-ds-Uoz">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
@@ -2782,13 +2789,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IjH-gY-nLN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="818" y="4738"/>
         </scene>
         <!--View Controller - page9-->
         <scene sceneID="hZs-tO-72N">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Mba-5t-K2m" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page9" title="page9" id="Vm4-cz-dgg" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jhu-xE-FBf">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
@@ -2973,13 +2980,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mba-5t-K2m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="818" y="5334"/>
         </scene>
         <!--View Controller - page10-->
         <scene sceneID="REv-Kz-wft">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Iyx-6l-XZU" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page10" title="page10" id="Hg4-Ao-7Wp" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nsf-C2-ew4">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
@@ -3164,13 +3171,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Iyx-6l-XZU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="818" y="5928"/>
         </scene>
         <!--View Controller - page11-->
         <scene sceneID="1ey-Q6-WHP">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XNw-An-j8Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page11" title="page11" id="lCl-q0-dhD" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="POT-VT-lqI">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
@@ -3355,13 +3362,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XNw-An-j8Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="818" y="6525"/>
         </scene>
         <!--View Controller - page12-->
         <scene sceneID="KY9-Zp-I5h">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="sPY-bu-JXH" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page12" title="page12" id="bNF-JR-NjQ" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eQp-63-ONr">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
@@ -3542,13 +3549,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sPY-bu-JXH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="818" y="7113"/>
         </scene>
         <!--View Controller - page13-->
         <scene sceneID="pL8-HX-e9R">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Brd-Pm-CBU" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page13" title="page13" id="akv-mz-nlb" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="egc-dh-Kjd">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
@@ -3733,13 +3740,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Brd-Pm-CBU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="812" y="7724"/>
         </scene>
         <!--View Controller - page14-->
         <scene sceneID="kSU-gv-P5v">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hO6-8t-uEp" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page14" title="page14" id="lDM-0O-TNf" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uH9-rs-olJ">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
@@ -3924,13 +3931,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hO6-8t-uEp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="802" y="8334"/>
         </scene>
         <!--View Controller - page15-->
         <scene sceneID="bkj-Cu-bq4">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dXb-sW-YNu" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page15" title="page15" id="9oZ-RD-YtO" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="h67-We-dpe">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
@@ -4111,13 +4118,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dXb-sW-YNu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="812" y="8909"/>
         </scene>
         <!--View Controller - page16-->
         <scene sceneID="seU-1U-l7O">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qhr-CD-P9s" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page16" title="page16" id="Onh-69-dE6" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jlh-yB-rNQ">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
@@ -4322,13 +4329,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qhr-CD-P9s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="812" y="9503"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Ckr-nw-r6c">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Amt-3f-0qx" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page14G" id="JKJ-R2-E29" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Xmm-L5-cK9">
                         <rect key="frame" x="0.0" y="20" width="480" height="300"/>
@@ -4532,13 +4539,13 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Amt-3f-0qx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1483" y="8414"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="8NQ-le-3AR">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XEE-0e-dJS" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page15G" id="lY9-3H-v3p" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="swk-8k-e3U">
                         <rect key="frame" x="0.0" y="20" width="480" height="300"/>
@@ -4738,13 +4745,13 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XEE-0e-dJS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1577" y="8917"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Mav-C6-nIU">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hEo-Ci-1BK" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page16G" id="rWO-Dy-t62" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pLY-0u-gLB">
                         <rect key="frame" x="0.0" y="20" width="480" height="300"/>
@@ -4968,13 +4975,13 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hEo-Ci-1BK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1577" y="9457"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Z1b-j5-1yn">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QW8-MX-9kQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page13G" id="HHi-DS-yUR" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ESV-Qf-Pti">
                         <rect key="frame" x="0.0" y="20" width="480" height="300"/>
@@ -5178,13 +5185,13 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QW8-MX-9kQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1495" y="7732"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="eEB-c1-1XP">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4WO-xW-nZz" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page9G" id="vGj-Ns-goe" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="y2J-ry-pod">
                         <rect key="frame" x="0.0" y="20" width="480" height="300"/>
@@ -5388,13 +5395,13 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4WO-xW-nZz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1390" y="5348"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="a1P-fK-NVr">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Uer-Mj-A4A" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page10G" id="hCe-cn-PHC" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6AD-La-O7Y">
                         <rect key="frame" x="0.0" y="20" width="480" height="300"/>
@@ -5598,13 +5605,13 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Uer-Mj-A4A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1419" y="6076"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="iVA-Ut-01t">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jqP-dk-Lcc" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page11G" id="oyX-xJ-JrU" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Bno-XI-1Yn">
                         <rect key="frame" x="0.0" y="20" width="480" height="300"/>
@@ -5808,13 +5815,13 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jqP-dk-Lcc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1396" y="6623"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="NJT-zE-5w8">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ZYB-He-sWV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page12G" id="ika-OX-RF9" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="prW-Ks-23X">
                         <rect key="frame" x="0.0" y="20" width="480" height="300"/>
@@ -6014,13 +6021,13 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZYB-He-sWV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1495" y="7067"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="fue-7a-DAc">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pO1-T1-0tX" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page8G" id="7C5-g2-oR0" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sFF-Qi-9Gh">
                         <rect key="frame" x="0.0" y="20" width="480" height="300"/>
@@ -6224,13 +6231,13 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pO1-T1-0tX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1402" y="4748"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Y1a-c6-hIz">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="CJO-3k-Ua1" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page7G" id="Pjc-w1-thh" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZeL-RY-byt">
                         <rect key="frame" x="0.0" y="20" width="480" height="300"/>
@@ -6430,13 +6437,13 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CJO-3k-Ua1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1380" y="4194"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="fbh-l4-eI8">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8Yc-rQ-UEg" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="page6G" id="BZu-ds-4X7" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Mcb-eX-DAX">
                         <rect key="frame" x="0.0" y="20" width="480" height="300"/>
@@ -6648,13 +6655,13 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Yc-rQ-UEg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1402" y="3513"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="15">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="14" sceneMemberID="firstResponder"/>
                 <viewController wantsFullScreenLayout="YES" id="12" customClass="RootViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="13">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
@@ -6667,6 +6674,7 @@
                         </subviews>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="14" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="360" y="476"/>
         </scene>
@@ -6681,45 +6689,45 @@
         <image name="UA.png" width="249" height="245"/>
         <image name="next.png" width="174" height="168"/>
         <image name="page00VIPhone.png" width="318" height="477"/>
-        <image name="page10GIPhone_fon.png" width="473" height="320"/>
-        <image name="page10GIPhone_medved.png" width="288" height="242"/>
-        <image name="page10GIPhone_zayac.png" width="306" height="254"/>
-        <image name="page10VIPhone_fon.png" width="314" height="480"/>
-        <image name="page10VIPhone_medved.png" width="256" height="256"/>
-        <image name="page10VIPhone_zayac.png" width="310" height="257"/>
-        <image name="page11GIPhone_fon.png" width="473" height="320"/>
-        <image name="page11GIPhone_medved.png" width="153" height="250"/>
-        <image name="page11GIPhone_zaychiki.png" width="217" height="205"/>
-        <image name="page11VIPhone_fon.png" width="314" height="480"/>
-        <image name="page11VIPhone_medved.png" width="112" height="260"/>
-        <image name="page11VIPhone_zaychiki.png" width="203" height="186"/>
-        <image name="page12GIPhone_fon.png" width="473" height="320"/>
-        <image name="page12GIPhone_zaychiki.png" width="226" height="233"/>
-        <image name="page12VIPhone_fon.png" width="314" height="480"/>
-        <image name="page12VIPhone_zaychiki.png" width="280" height="285"/>
-        <image name="page13GIPhone_fon.png" width="473" height="320"/>
-        <image name="page13GIPhone_medved.png" width="147" height="209"/>
-        <image name="page13VIPhone_fon.png" width="314" height="480"/>
-        <image name="page13VIPhone_medved.png" width="184" height="250"/>
-        <image name="page13VIPhone_zaychik.png" width="132" height="100"/>
-        <image name="page14GIPhone_fon.png" width="473" height="320"/>
-        <image name="page14GIPhone_medved.png" width="190" height="252"/>
-        <image name="page14VIPhone_fon.png" width="314" height="480"/>
-        <image name="page14VIPhone_medved.png" width="165" height="258"/>
-        <image name="page14VIPhone_zaychik.png" width="90" height="103"/>
-        <image name="page15GIPhone_fon.png" width="473" height="320"/>
-        <image name="page15GIPhone_medved.png" width="459" height="320"/>
-        <image name="page15VIPhone_fon.png" width="314" height="480"/>
-        <image name="page15VIPhone_medved.png" width="314" height="271"/>
-        <image name="page16GIPhone_fon.png" width="473" height="320"/>
-        <image name="page16VIPhone_belka.png" width="129" height="139"/>
-        <image name="page16VIPhone_ezh.png" width="101" height="118"/>
-        <image name="page16VIPhone_fon.png" width="314" height="480"/>
-        <image name="page16VIPhone_kuznechil.png" width="31" height="33"/>
-        <image name="page16VIPhone_lisa.png" width="160" height="205"/>
-        <image name="page16VIPhone_soroka.png" width="113" height="91"/>
-        <image name="page16VIPhone_zaychik.png" width="117" height="138"/>
-        <image name="page16VIPhone_zhuk.png" width="41" height="35"/>
+        <image name="page10GIPhone_fon.png" width="16" height="16"/>
+        <image name="page10GIPhone_medved.png" width="16" height="16"/>
+        <image name="page10GIPhone_zayac.png" width="16" height="16"/>
+        <image name="page10VIPhone_fon.png" width="16" height="16"/>
+        <image name="page10VIPhone_medved.png" width="16" height="16"/>
+        <image name="page10VIPhone_zayac.png" width="16" height="16"/>
+        <image name="page11GIPhone_fon.png" width="16" height="16"/>
+        <image name="page11GIPhone_medved.png" width="16" height="16"/>
+        <image name="page11GIPhone_zaychiki.png" width="16" height="16"/>
+        <image name="page11VIPhone_fon.png" width="16" height="16"/>
+        <image name="page11VIPhone_medved.png" width="16" height="16"/>
+        <image name="page11VIPhone_zaychiki.png" width="16" height="16"/>
+        <image name="page12GIPhone_fon.png" width="16" height="16"/>
+        <image name="page12GIPhone_zaychiki.png" width="16" height="16"/>
+        <image name="page12VIPhone_fon.png" width="16" height="16"/>
+        <image name="page12VIPhone_zaychiki.png" width="16" height="16"/>
+        <image name="page13GIPhone_fon.png" width="16" height="16"/>
+        <image name="page13GIPhone_medved.png" width="16" height="16"/>
+        <image name="page13VIPhone_fon.png" width="16" height="16"/>
+        <image name="page13VIPhone_medved.png" width="16" height="16"/>
+        <image name="page13VIPhone_zaychik.png" width="16" height="16"/>
+        <image name="page14GIPhone_fon.png" width="16" height="16"/>
+        <image name="page14GIPhone_medved.png" width="16" height="16"/>
+        <image name="page14VIPhone_fon.png" width="16" height="16"/>
+        <image name="page14VIPhone_medved.png" width="16" height="16"/>
+        <image name="page14VIPhone_zaychik.png" width="16" height="16"/>
+        <image name="page15GIPhone_fon.png" width="16" height="16"/>
+        <image name="page15GIPhone_medved.png" width="16" height="16"/>
+        <image name="page15VIPhone_fon.png" width="16" height="16"/>
+        <image name="page15VIPhone_medved.png" width="16" height="16"/>
+        <image name="page16GIPhone_fon.png" width="16" height="16"/>
+        <image name="page16VIPhone_belka.png" width="16" height="16"/>
+        <image name="page16VIPhone_ezh.png" width="16" height="16"/>
+        <image name="page16VIPhone_fon.png" width="16" height="16"/>
+        <image name="page16VIPhone_kuznechil.png" width="16" height="16"/>
+        <image name="page16VIPhone_lisa.png" width="16" height="16"/>
+        <image name="page16VIPhone_soroka.png" width="16" height="16"/>
+        <image name="page16VIPhone_zaychik.png" width="16" height="16"/>
+        <image name="page16VIPhone_zhuk.png" width="16" height="16"/>
         <image name="page1GIPhone_fon.png" width="473" height="320"/>
         <image name="page1GIPhone_madved.png" width="163" height="250"/>
         <image name="page1VIPhone_belka.png" width="86" height="63"/>
@@ -6733,47 +6741,47 @@
         <image name="page2VIPhone_lisa.png" width="103" height="172"/>
         <image name="page2VIPhone_medved.png" width="202" height="267"/>
         <image name="page2VIPhone_vorona.png" width="100" height="70"/>
-        <image name="page3GIPhone_fon.png" width="472" height="320"/>
-        <image name="page3GIPhone_medved.png" width="383" height="320"/>
-        <image name="page3VIPhone_fon.png" width="314" height="480"/>
-        <image name="page3VIPhone_medved.png" width="314" height="469"/>
-        <image name="page4GIPhone_fon.png" width="472" height="320"/>
-        <image name="page4GIPhone_zayka.png" width="167" height="216"/>
-        <image name="page4VIPhone_belka.png" width="129" height="167"/>
-        <image name="page4VIPhone_fon.png" width="314" height="480"/>
-        <image name="page4VIPhone_vorona.png" width="192" height="108"/>
-        <image name="page4VIPhone_zayka.png" width="160" height="211"/>
-        <image name="page4VIPhone_zhuk.png" width="48" height="36"/>
-        <image name="page5GIPhone_fon.png" width="472" height="320"/>
-        <image name="page5VIPhone_1zaychik.png" width="87" height="129"/>
-        <image name="page5VIPhone_2zaychik.png" width="88" height="93"/>
-        <image name="page5VIPhone_3zaychik.png" width="89" height="124"/>
-        <image name="page5VIPhone_fon.png" width="314" height="480"/>
-        <image name="page5VIPhone_mama.png" width="168" height="191"/>
-        <image name="page5VIPhone_papa.png" width="166" height="269"/>
-        <image name="page5VIPhone_zhuk.png" width="30" height="23"/>
-        <image name="page6GIPhone_fon.png" width="473" height="320"/>
-        <image name="page6GIPhone_muravey.png" width="55" height="46"/>
-        <image name="page6GIPhone_zayac.png" width="157" height="227"/>
-        <image name="page6VIPhone_fon.png" width="314" height="480"/>
-        <image name="page6VIPhone_muravey.png" width="59" height="52"/>
-        <image name="page6VIPhone_zayac.png" width="177" height="253"/>
-        <image name="page7GIPhone_fon.png" width="473" height="320"/>
-        <image name="page7GIPhone_zayac.png" width="238" height="146"/>
-        <image name="page7VIPhone_fon.png" width="314" height="480"/>
-        <image name="page7VIPhone_zayac.png" width="268" height="163"/>
-        <image name="page8GIPhone_fon.png" width="473" height="320"/>
-        <image name="page8GIPhone_medved.png" width="189" height="230"/>
-        <image name="page8GIPhone_soroka.png" width="140" height="101"/>
-        <image name="page8VIPhone_fon.png" width="314" height="480"/>
-        <image name="page8VIPhone_medved.png" width="211" height="258"/>
-        <image name="page8VIPhone_soroka.png" width="142" height="101"/>
-        <image name="page9GIPhone_fon.png" width="473" height="320"/>
-        <image name="page9GIPhone_medved.png" width="209" height="261"/>
-        <image name="page9GIPhone_zayac.png" width="144" height="166"/>
-        <image name="page9VIPhone_fon.png" width="314" height="480"/>
-        <image name="page9VIPhone_medved.png" width="191" height="317"/>
-        <image name="page9VIPhone_zayac.png" width="163" height="197"/>
+        <image name="page3GIPhone_fon.png" width="16" height="16"/>
+        <image name="page3GIPhone_medved.png" width="16" height="16"/>
+        <image name="page3VIPhone_fon.png" width="16" height="16"/>
+        <image name="page3VIPhone_medved.png" width="16" height="16"/>
+        <image name="page4GIPhone_fon.png" width="16" height="16"/>
+        <image name="page4GIPhone_zayka.png" width="16" height="16"/>
+        <image name="page4VIPhone_belka.png" width="16" height="16"/>
+        <image name="page4VIPhone_fon.png" width="16" height="16"/>
+        <image name="page4VIPhone_vorona.png" width="16" height="16"/>
+        <image name="page4VIPhone_zayka.png" width="16" height="16"/>
+        <image name="page4VIPhone_zhuk.png" width="16" height="16"/>
+        <image name="page5GIPhone_fon.png" width="16" height="16"/>
+        <image name="page5VIPhone_1zaychik.png" width="16" height="16"/>
+        <image name="page5VIPhone_2zaychik.png" width="16" height="16"/>
+        <image name="page5VIPhone_3zaychik.png" width="16" height="16"/>
+        <image name="page5VIPhone_fon.png" width="16" height="16"/>
+        <image name="page5VIPhone_mama.png" width="16" height="16"/>
+        <image name="page5VIPhone_papa.png" width="16" height="16"/>
+        <image name="page5VIPhone_zhuk.png" width="16" height="16"/>
+        <image name="page6GIPhone_fon.png" width="16" height="16"/>
+        <image name="page6GIPhone_muravey.png" width="16" height="16"/>
+        <image name="page6GIPhone_zayac.png" width="16" height="16"/>
+        <image name="page6VIPhone_fon.png" width="16" height="16"/>
+        <image name="page6VIPhone_muravey.png" width="16" height="16"/>
+        <image name="page6VIPhone_zayac.png" width="16" height="16"/>
+        <image name="page7GIPhone_fon.png" width="16" height="16"/>
+        <image name="page7GIPhone_zayac.png" width="16" height="16"/>
+        <image name="page7VIPhone_fon.png" width="16" height="16"/>
+        <image name="page7VIPhone_zayac.png" width="16" height="16"/>
+        <image name="page8GIPhone_fon.png" width="16" height="16"/>
+        <image name="page8GIPhone_medved.png" width="16" height="16"/>
+        <image name="page8GIPhone_soroka.png" width="16" height="16"/>
+        <image name="page8VIPhone_fon.png" width="16" height="16"/>
+        <image name="page8VIPhone_medved.png" width="16" height="16"/>
+        <image name="page8VIPhone_soroka.png" width="16" height="16"/>
+        <image name="page9GIPhone_fon.png" width="16" height="16"/>
+        <image name="page9GIPhone_medved.png" width="16" height="16"/>
+        <image name="page9GIPhone_zayac.png" width="16" height="16"/>
+        <image name="page9VIPhone_fon.png" width="16" height="16"/>
+        <image name="page9VIPhone_medved.png" width="16" height="16"/>
+        <image name="page9VIPhone_zayac.png" width="16" height="16"/>
         <image name="play.png" width="177" height="177"/>
         <image name="previous.png" width="174" height="168"/>
     </resources>
@@ -6784,10 +6792,17 @@
         <class className="DataViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/DataViewController.h"/>
             <relationships>
+                <relationship kind="action" name="animalVoiceChange:"/>
+                <relationship kind="action" name="flagStart:"/>
+                <relationship kind="action" name="nextPageStart:"/>
+                <relationship kind="action" name="playStart:"/>
+                <relationship kind="action" name="playStop:"/>
+                <relationship kind="action" name="previousPageStart:"/>
                 <relationship kind="outlet" name="animalVoice" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="animalVoiceOnOff" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="buttonsView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="dataLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="downloadingProgress" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="finalTextInsideBox" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="flagAE" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="flagCN" candidateClass="UIButton"/>

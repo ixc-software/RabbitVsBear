@@ -63,11 +63,18 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
+    DataViewController *startingViewController = [self.pageViewController.viewControllers objectAtIndex:0];
+    [startingViewController shouldAutorotate];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
     } else {
         return YES;
     }
+}
+
+- (BOOL)shouldAutorotate {
+    UIInterfaceOrientation orientation = [[UIDevice currentDevice] orientation];
+    return [self shouldAutorotateToInterfaceOrientation:orientation];
 }
 
 - (ModelController *)modelController
@@ -139,6 +146,6 @@
             return NO;
         }
     //}
-    return YES;
+    return NO;
 }
 @end

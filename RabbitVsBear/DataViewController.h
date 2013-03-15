@@ -52,5 +52,6 @@
 @property (weak, nonatomic) IBOutlet UISwitch *animalVoiceOnOff;
 @property (weak, nonatomic) IBOutlet UIButton *previousPageButton;
 @property (weak, nonatomic) IBOutlet UIButton *nextPageButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *downloadingProgress;
 
 @end

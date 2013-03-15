@@ -11,6 +11,7 @@
 #import "RootViewController.h"
 #import "UniversalView.h"
 #import <QuartzCore/CoreAnimation.h>
+#import "AppDelegate.h"
 
 @interface DataViewController ()
 -(void) startAnimationForFlagsForSelectedTag:(NSInteger)selectedTag forFirstStart:(BOOL)isFirstStart;
@@ -139,6 +140,7 @@
     [self setAnimalVoiceOnOff:nil];
     [self setPreviousPageButton:nil];
     [self setNextPageButton:nil];
+    [self setDownloadingProgress:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     self.dataLabel = nil;
@@ -155,22 +157,84 @@
     
     UIImage *imageLandscapeBackground = nil;
     UIImage *imagePortraitBackground = nil;
-    
-    
+    BOOL isRethina = NO;
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
+        ([UIScreen mainScreen].scale == 2.0)) {
+        // Retina display
+        isRethina = YES;
+    } else {
+        // non-Retina display
+    }
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+
     UIFont *currentFont = self.finalTextInsideBox.font;
-    
+    NSString *page = [self.dataObject valueForKey:@"page"];
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    NSNumber *pageNumber = [formatter numberFromString:page];
+
     if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
-        imageLandscape = [dataForPage valueForKey:@"image_IPhone_Landscape"];
-        imagePortrait = [dataForPage valueForKey:@"image_IPhone_Portrait"];
+        NSString *imageLandscapeName = [dataForPage valueForKey:@"image_IPhone_Landscape"];
+        NSString *imagePortraitName = [dataForPage valueForKey:@"image_IPhone_Portrait"];
+        if (pageNumber.intValue < 3) {
+            if (isRethina) {
+                imageLandscapeName = [imageLandscapeName stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageLandscapeName]];
+                if (image1new) imageLandscape = image1new; else imageLandscape = [UIImage imageNamed:[dataForPage valueForKey:@"image_IPhone_Landscape"]];
+            } else imageLandscape = [UIImage imageNamed:imageLandscapeName];
+            if (isRethina) {
+                imagePortraitName = [imagePortraitName stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imagePortraitName]];
+                if (image1new) imagePortrait = image1new; else imagePortrait = [UIImage imageNamed:[dataForPage valueForKey:@"image_IPhone_Portrait"]];
+            } else imagePortrait = [UIImage imageNamed:imagePortraitName];
+        } else {
+            imageLandscape = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageLandscapeName]];
+            if (isRethina) {
+                imageLandscapeName = [imageLandscapeName stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageLandscapeName]];
+                if (image1new) imageLandscape = image1new;
+            }
+            imagePortrait = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imagePortraitName]];
+            if (isRethina) {
+                imagePortraitName = [imagePortraitName stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imagePortraitName]];
+                if (image1new) imagePortrait = image1new; 
+            } 
+        }
+
         self.finalTextInsideBox.font = [UIFont fontWithName:currentFont.fontName size:14.0];
-        
         imageLandscapeBackground = [UIImage imageNamed:@"page00GIPhone.png"];
         imagePortraitBackground = [UIImage imageNamed:@"page00VIPhone.png"];
-
-        
     } else {
-        imageLandscape = [dataForPage valueForKey:@"image_IPad_Landscape"];
-        imagePortrait = [dataForPage valueForKey:@"image_IPad_Portrait"];
+        NSString *imageLandscapeName = [dataForPage valueForKey:@"image_IPad_Landscape"];
+        NSString *imagePortraitName = [dataForPage valueForKey:@"image_IPad_Portrait"];
+        if (pageNumber.intValue < 3) {
+            if (isRethina) {
+                imageLandscapeName = [imageLandscapeName stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageLandscapeName]];
+                if (image1new) imageLandscape = image1new;else imageLandscape = [UIImage imageNamed:imageLandscapeName];
+            } else imageLandscape = [UIImage imageNamed:[dataForPage valueForKey:@"image_IPad_Landscape"]];
+            if (isRethina) {
+                imagePortraitName = [imagePortraitName stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imagePortraitName]];
+                if (image1new) imagePortrait = image1new;else imagePortrait = [UIImage imageNamed:[dataForPage valueForKey:@"image_IPad_Portrait"]];
+            } else imagePortrait = [UIImage imageNamed:imagePortraitName];
+        } else {
+            imageLandscape = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageLandscapeName]];
+            if (isRethina) {
+                imageLandscapeName = [imageLandscapeName stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageLandscapeName]];
+                if (image1new) imageLandscape = image1new;
+            }
+            imagePortrait = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imagePortraitName]];
+            if (isRethina) {
+                imagePortraitName = [imagePortraitName stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imagePortraitName]];
+                if (image1new) imagePortrait = image1new;
+            } 
+        }
+        //imageLandscape = [dataForPage valueForKey:@"image_IPad_Landscape"];
+        //imagePortrait = [dataForPage valueForKey:@"image_IPad_Portrait"];
         self.finalTextInsideBox.font = [UIFont fontWithName:currentFont.fontName size:24.0];
         imageLandscapeBackground = [UIImage imageNamed:@"page00GIPad.png"];
         imagePortraitBackground = [UIImage imageNamed:@"page00VIPad.png"];
@@ -186,9 +250,7 @@
         [self.imageBackground setImage:imageLandscapeBackground];
         //NSLog(@"frame of image Landscape:%@",NSStringFromCGRect(self.image.frame));
         if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
-            
             //iPhone Gorizontal/ Landcape
-            
             self.playStop.frame = CGRectMake(384, 45, self.playStop.frame.size.width, self.playStop.frame.size.height);
             self.playbackProgress.frame = CGRectMake(384, 36, self.playbackProgress.frame.size.width, self.playbackProgress.frame.size.height);
             self.buttonsView.frame = CGRectMake(317, 165, self.buttonsView.frame.size.width, self.buttonsView.frame.size.height);
@@ -197,50 +259,96 @@
             self.pageNumber.frame = CGRectMake(49, 9, self.pageNumber.frame.size.width, self.pageNumber.frame.size.height);
             self.animalVoiceOnOff.frame = CGRectMake(381, 130, self.animalVoiceOnOff.frame.size.width, self.animalVoiceOnOff.frame.size.height);
             self.animalVoice.frame = CGRectMake(373, 113, self.animalVoice.frame.size.width, self.animalVoice.frame.size.height);
-            
             self.previousPageButton.frame = CGRectMake(0, 0, self.previousPageButton.frame.size.width, self.previousPageButton.frame.size.height);
             self.nextPageButton.frame = CGRectMake(434, 0, self.nextPageButton.frame.size.width, self.nextPageButton.frame.size.height);
+            self.downloadingProgress.frame = CGRectMake(436, 0, self.downloadingProgress.frame.size.width, self.downloadingProgress.frame.size.height);
+            NSString *imageName1 = [dataForPage valueForKey:@"image1_IPhone_Landscape"];
+            UIImage *image1 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName1]];;
+            if (isRethina) {
+                imageName1 = [imageName1 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName1]];
+                if (image1new) image1 = image1new;
+            } 
+            if (pageNumber.intValue < 3) image1 = [UIImage imageNamed:[dataForPage valueForKey:@"image1_IPhone_Landscape"]];
 
-
-            UIImage *image1 = [dataForPage valueForKey:@"image1_IPhone_Landscape"];;
             CGRect image1Frame = CGRectFromString([dataForPage valueForKey:@"image1_IPhone_Landscape_Point"]);
             self.image1.image = image1;
             self.image1.frame = image1Frame;
+            //UIImage *image2 = [dataForPage valueForKey:@"image2_IPhone_Landscape"];;
+            NSString *imageName2 = [dataForPage valueForKey:@"image2_IPhone_Landscape"];
+            UIImage *image2 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName2]];;
+            if (isRethina) {
+                imageName2 = [imageName2 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName2]];
+                if (image1new) image2 = image1new;
+            } 
+            if (pageNumber.intValue < 3) image2 = [UIImage imageNamed:[dataForPage valueForKey:@"image2_IPhone_Landscape"]];
 
-            UIImage *image2 = [dataForPage valueForKey:@"image2_IPhone_Landscape"];;
             CGRect image2Frame = CGRectFromString([dataForPage valueForKey:@"image2_IPhone_Landscape_Point"]);
             self.image2.image = image2;
             self.image2.frame = image2Frame;
             
-            UIImage *image3 = [dataForPage valueForKey:@"image3_IPhone_Landscape"];;
+            //UIImage *image3 = [dataForPage valueForKey:@"image3_IPhone_Landscape"];;
+            NSString *imageName3 = [dataForPage valueForKey:@"image3_IPhone_Landscape"];
+            UIImage *image3 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName3]];;
+            if (isRethina) {
+                imageName3 = [imageName3 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName3]];
+                if (image1new) image3 = image1new;
+            } 
+            if (pageNumber.intValue < 3) image3 = [UIImage imageNamed:[dataForPage valueForKey:@"image3_IPhone_Landscape"]];
+
             CGRect image3Frame = CGRectFromString([dataForPage valueForKey:@"image3_IPhone_Landscape_Point"]);
             self.image3.image = image3;
             self.image3.frame = image3Frame;
             
-            UIImage *image4 = [dataForPage valueForKey:@"image4_IPhone_Landscape"];;
+            //UIImage *image4 = [dataForPage valueForKey:@"image4_IPhone_Landscape"];;
+            NSString *imageName4 = [dataForPage valueForKey:@"image4_IPhone_Landscape"];
+            UIImage *image4 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName4]];;
+            if (isRethina) {
+                imageName4 = [imageName4 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName4]];
+                if (image1new) image4 = image1new;
+            } 
+
             CGRect image4Frame = CGRectFromString([dataForPage valueForKey:@"image4_IPhone_Landscape_Point"]);
             self.image4.image = image4;
             self.image4.frame = image4Frame;
             
-            UIImage *image5 = [dataForPage valueForKey:@"image5_IPhone_Landscape"];;
+            //UIImage *image5 = [dataForPage valueForKey:@"image5_IPhone_Landscape"];;
+            NSString *imageName5 = [dataForPage valueForKey:@"image5_IPhone_Landscape"];
+            UIImage *image5 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName5]];;
+            if (isRethina) {
+                imageName5 = [imageName5 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName5]];
+                if (image1new) image5 = image1new; 
+            } 
             CGRect image5Frame = CGRectFromString([dataForPage valueForKey:@"image5_IPhone_Landscape_Point"]);
             self.image5.image = image5;
             self.image5.frame = image5Frame;
             
-            UIImage *image6 = [dataForPage valueForKey:@"image6_IPhone_Landscape"];;
+            //UIImage *image6 = [dataForPage valueForKey:@"image6_IPhone_Landscape"];;
+            NSString *imageName6 = [dataForPage valueForKey:@"image6_IPhone_Landscape"];
+            UIImage *image6 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName6]];;
+            if (isRethina) {
+                imageName6 = [imageName6 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName6]];
+                if (image1new) image6 = image1new; 
+            } 
             CGRect image6Frame = CGRectFromString([dataForPage valueForKey:@"image6_IPhone_Landscape_Point"]);
             self.image6.image = image6;
             self.image6.frame = image6Frame;
-            
-            UIImage *image7 = [dataForPage valueForKey:@"image7_IPhone_Landscape"];;
+            //UIImage *image7 = [dataForPage valueForKey:@"image7_IPhone_Landscape"];;
+            NSString *imageName7 = [dataForPage valueForKey:@"image7_IPhone_Landscape"];
+            UIImage *image7 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName7]];;
+            if (isRethina) {
+                imageName7 = [imageName7 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName7]];
+                if (image1new) image7 = image1new; 
+            } 
             CGRect image7Frame = CGRectFromString([dataForPage valueForKey:@"image7_IPhone_Landscape_Point"]);
             self.image7.image = image7;
             self.image7.frame = image7Frame;
-            
-            
-            
-
-            
         } else {
             // iPad Gorizontal
             self.playStop.frame = CGRectMake(888, 370, self.playStop.frame.size.width, self.playStop.frame.size.height);
@@ -254,38 +362,93 @@
             
             self.previousPageButton.frame = CGRectMake(20, 7, self.previousPageButton.frame.size.width, self.previousPageButton.frame.size.height);
             self.nextPageButton.frame = CGRectMake(917, 7, self.nextPageButton.frame.size.width, self.nextPageButton.frame.size.height);
+            self.downloadingProgress.frame = CGRectMake(939, 27, self.downloadingProgress.frame.size.width, self.downloadingProgress.frame.size.height);
+            
+            //UIImage *image1 = [dataForPage valueForKey:@"image1_IPad_Landscape"];;
+            NSString *imageName1 = [dataForPage valueForKey:@"image1_IPad_Landscape"];
+            UIImage *image1 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName1]];;
+            if (isRethina) {
+                imageName1 = [imageName1 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName1]];
+                if (image1new) image1 = image1new;
+            }
+            if (pageNumber.intValue < 3) image1 = [UIImage imageNamed:[dataForPage valueForKey:@"image1_IPad_Landscape"]];
 
-            UIImage *image1 = [dataForPage valueForKey:@"image1_IPad_Landscape"];;
             CGRect image1Frame = CGRectFromString([dataForPage valueForKey:@"image1_IPad_Landscape_Point"]);
             self.image1.image = image1;
             self.image1.frame = image1Frame;
-            
-            UIImage *image2 = [dataForPage valueForKey:@"image2_IPad_Landscape"];;
+            //UIImage *image2 = [dataForPage valueForKey:@"image2_IPad_Landscape"];
+            NSString *imageName2 = [dataForPage valueForKey:@"image2_IPad_Landscape"];
+            UIImage *image2 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName2]];;
+            if (isRethina) {
+                imageName2 = [imageName2 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName2]];
+                if (image1new) image2 = image1new;
+            }
+            if (pageNumber.intValue < 3) image2 = [UIImage imageNamed:[dataForPage valueForKey:@"image2_IPad_Landscape"]];
+
             CGRect image2Frame = CGRectFromString([dataForPage valueForKey:@"image2_IPad_Landscape_Point"]);
             self.image2.image = image2;
             self.image2.frame = image2Frame;
-            
-            UIImage *image3 = [dataForPage valueForKey:@"image3_IPad_Landscape"];;
+            //UIImage *image3 = [dataForPage valueForKey:@"image3_IPad_Landscape"];;
+            NSString *imageName3 = [dataForPage valueForKey:@"image3_IPad_Landscape"];
+            UIImage *image3 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName3]];;
+            if (isRethina) {
+                imageName3 = [imageName3 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName3]];
+                if (image1new) image3 = image1new;
+            }
+            if (pageNumber.intValue < 3) image3 = [UIImage imageNamed:[dataForPage valueForKey:@"image3_IPad_Landscape"]];
+
             CGRect image3Frame = CGRectFromString([dataForPage valueForKey:@"image3_IPad_Landscape_Point"]);
             self.image3.image = image3;
             self.image3.frame = image3Frame;
             
-            UIImage *image4 = [dataForPage valueForKey:@"image4_IPad_Landscape"];;
+            //UIImage *image4 = [dataForPage valueForKey:@"image4_IPad_Landscape"];;
+            NSString *imageName4 = [dataForPage valueForKey:@"image4_IPad_Landscape"];
+            UIImage *image4 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName4]];;
+            if (isRethina) {
+                imageName4 = [imageName4 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName4]];
+                if (image1new) image4 = image1new;
+            } 
             CGRect image4Frame = CGRectFromString([dataForPage valueForKey:@"image4_IPad_Landscape_Point"]);
             self.image4.image = image4;
             self.image4.frame = image4Frame;
             
-            UIImage *image5 = [dataForPage valueForKey:@"image5_IPad_Landscape"];;
+            //UIImage *image5 = [dataForPage valueForKey:@"image5_IPad_Landscape"];;
+            NSString *imageName5 = [dataForPage valueForKey:@"image5_IPad_Landscape"];
+            UIImage *image5 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName5]];;
+            if (isRethina) {
+                imageName5 = [imageName5 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName5]];
+                if (image1new) image5 = image1new; 
+            } 
             CGRect image5Frame = CGRectFromString([dataForPage valueForKey:@"image5_IPad_Landscape_Point"]);
             self.image5.image = image5;
             self.image5.frame = image5Frame;
             
-            UIImage *image6 = [dataForPage valueForKey:@"image6_IPad_Landscape"];;
+            //UIImage *image6 = [dataForPage valueForKey:@"image6_IPad_Landscape"];;
+            NSString *imageName6 = [dataForPage valueForKey:@"image6_IPad_Landscape"];
+            UIImage *image6 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName6]];;
+            if (isRethina) {
+                imageName6 = [imageName6 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName6]];
+                if (image1new) image6 = image1new; 
+            } 
             CGRect image6Frame = CGRectFromString([dataForPage valueForKey:@"image6_IPad_Landscape_Point"]);
             self.image6.image = image6;
             self.image6.frame = image6Frame;
             
-            UIImage *image7 = [dataForPage valueForKey:@"image7_IPad_Landscape"];;
+            //UIImage *image7 = [dataForPage valueForKey:@"image7_IPad_Landscape"];;
+            NSString *imageName7 = [dataForPage valueForKey:@"image7_IPad_Landscape"];
+            UIImage *image7 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName7]];;
+            if (isRethina) {
+                imageName7 = [imageName7 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName7]];
+                if (image1new) image7 = image1new; 
+            } 
+
             CGRect image7Frame = CGRectFromString([dataForPage valueForKey:@"image7_IPad_Landscape_Point"]);
             self.image7.image = image7;
             self.image7.frame = image7Frame;
@@ -310,40 +473,101 @@
             self.animalVoice.frame = CGRectMake(44, 413, self.animalVoice.frame.size.width, self.animalVoice.frame.size.height);
             self.previousPageButton.frame = CGRectMake(0, 423, self.previousPageButton.frame.size.width, self.previousPageButton.frame.size.height);
             self.nextPageButton.frame = CGRectMake(273, 423, self.nextPageButton.frame.size.width, self.nextPageButton.frame.size.height);
+            self.downloadingProgress.frame = CGRectMake(275, 423, self.downloadingProgress.frame.size.width, self.downloadingProgress.frame.size.height);
 
             // prepare images for animals:
            // UIImage *image1 = [dataForPage valueForKey:@"image1_IPhone_Portrait"];;
-            UIImage *image1 = [dataForPage valueForKey:@"image1_IPhone_Portrait"];;
+            //UIImage *image1 = [dataForPage valueForKey:@"image1_IPhone_Portrait"];;
+            NSString *imageName1 = [dataForPage valueForKey:@"image1_IPhone_Portrait"];
+            UIImage *image1 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName1]];;
+            if (isRethina) {
+                imageName1 = [imageName1 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName1]];
+                if (image1new) image1 = image1new;
+            } 
+            if (pageNumber.intValue < 3) image1 = [UIImage imageNamed:[dataForPage valueForKey:@"image1_IPhone_Portrait"]];
+
             CGRect image1Frame = CGRectFromString([dataForPage valueForKey:@"image1_IPhone_Portrait_Point"]);
             self.image1.image = image1;
             self.image1.frame = image1Frame;
             
-            UIImage *image2 = [dataForPage valueForKey:@"image2_IPhone_Portrait"];;
+            //UIImage *image2 = [dataForPage valueForKey:@"image2_IPhone_Portrait"];;
+            NSString *imageName2 = [dataForPage valueForKey:@"image2_IPhone_Portrait"];
+            UIImage *image2 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName2]];;
+            if (isRethina) {
+                imageName2 = [imageName2 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName2]];
+                if (image1new) image2 = image1new;
+            }
+            if (pageNumber.intValue < 3) image2 = [UIImage imageNamed:[dataForPage valueForKey:@"image2_IPhone_Portrait"]];
+
             CGRect image2Frame = CGRectFromString([dataForPage valueForKey:@"image2_IPhone_Portrait_Point"]);
             self.image2.image = image2;
             self.image2.frame = image2Frame;
             
-            UIImage *image3 = [dataForPage valueForKey:@"image3_IPhone_Portrait"];;
+            //UIImage *image3 = [dataForPage valueForKey:@"image3_IPhone_Portrait"];;
+            NSString *imageName3 = [dataForPage valueForKey:@"image3_IPhone_Portrait"];
+            UIImage *image3 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName3]];
+            //NSLog(@"imageName3->%@",imageName3);
+            if (isRethina) {
+                imageName3 = [imageName3 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                //NSLog(@"imageName3->%@",imageName3);
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName3]];
+                if (image1new) image3 = image1new;
+            }
+            if (pageNumber.intValue < 3) image3 = [UIImage imageNamed:[dataForPage valueForKey:@"image3_IPhone_Portrait"]];
+
             CGRect image3Frame = CGRectFromString([dataForPage valueForKey:@"image3_IPhone_Portrait_Point"]);
             self.image3.image = image3;
             self.image3.frame = image3Frame;
             
-            UIImage *image4 = [dataForPage valueForKey:@"image4_IPhone_Portrait"];;
+            //UIImage *image4 = [dataForPage valueForKey:@"image4_IPhone_Portrait"];;
+            NSString *imageName4 = [dataForPage valueForKey:@"image4_IPhone_Portrait"];
+            UIImage *image4 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName4]];;
+            if (isRethina) {
+                imageName4 = [imageName4 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName4]];
+                if (image1new) image4 = image1new;
+            } 
+
             CGRect image4Frame = CGRectFromString([dataForPage valueForKey:@"image4_IPhone_Portrait_Point"]);
             self.image4.image = image4;
             self.image4.frame = image4Frame;
             
-            UIImage *image5 = [dataForPage valueForKey:@"image5_IPhone_Portrait"];;
+            //UIImage *image5 = [dataForPage valueForKey:@"image5_IPhone_Portrait"];;
+            NSString *imageName5 = [dataForPage valueForKey:@"image5_IPhone_Portrait"];
+            UIImage *image5 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName5]];;
+            if (isRethina) {
+                imageName5 = [imageName5 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName5]];
+                if (image1new) image5 = image1new; 
+            } 
+
             CGRect image5Frame = CGRectFromString([dataForPage valueForKey:@"image5_IPhone_Portrait_Point"]);
             self.image5.image = image5;
             self.image5.frame = image5Frame;
             
-            UIImage *image6 = [dataForPage valueForKey:@"image6_IPhone_Portrait"];;
+            //UIImage *image6 = [dataForPage valueForKey:@"image6_IPhone_Portrait"];;
+            NSString *imageName6 = [dataForPage valueForKey:@"image6_IPhone_Portrait"];
+            UIImage *image6 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName6]];;
+            if (isRethina) {
+                imageName6 = [imageName6 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName6]];
+                if (image1new) image6 = image1new; 
+            } 
             CGRect image6Frame = CGRectFromString([dataForPage valueForKey:@"image6_IPhone_Portrait_Point"]);
             self.image6.image = image6;
             self.image6.frame = image6Frame;
             
-            UIImage *image7 = [dataForPage valueForKey:@"image7_IPhone_Portrait"];;
+            //UIImage *image7 = [dataForPage valueForKey:@"image7_IPhone_Portrait"];;
+            NSString *imageName7 = [dataForPage valueForKey:@"image7_IPhone_Portrait"];
+            UIImage *image7 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName7]];;
+            if (isRethina) {
+                imageName7 = [imageName7 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName7]];
+                if (image1new) image7 = image1new; 
+            } 
+
             CGRect image7Frame = CGRectFromString([dataForPage valueForKey:@"image7_IPhone_Portrait_Point"]);
             self.image7.image = image7;
             self.image7.frame = image7Frame;
@@ -363,39 +587,94 @@
             
             self.previousPageButton.frame = CGRectMake(7, 918, self.previousPageButton.frame.size.width, self.previousPageButton.frame.size.height);
             self.nextPageButton.frame = CGRectMake(674, 918, self.nextPageButton.frame.size.width, self.nextPageButton.frame.size.height);
-
+            self.downloadingProgress.frame = CGRectMake(696, 939, self.downloadingProgress.frame.size.width, self.downloadingProgress.frame.size.height);
             
-            UIImage *image1 = [dataForPage valueForKey:@"image1_IPad_Portrait"];;
+            //UIImage *image1 = [dataForPage valueForKey:@"image1_IPad_Portrait"];
+            NSString *imageName1 = [dataForPage valueForKey:@"image1_IPad_Portrait"];
+            UIImage *image1 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName1]];;
+            if (isRethina) {
+                imageName1 = [imageName1 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName1]];
+                if (image1new) image1 = image1new;
+            }
+            if (pageNumber.intValue < 3) image1 = [UIImage imageNamed:[dataForPage valueForKey:@"image1_IPad_Portrait"]];
+
             CGRect image1Frame = CGRectFromString([dataForPage valueForKey:@"image1_IPad_Portrait_Point"]);
             self.image1.image = image1;
             self.image1.frame = image1Frame;
             
-            UIImage *image2 = [dataForPage valueForKey:@"image2_IPad_Portrait"];;
+            //UIImage *image2 = [dataForPage valueForKey:@"image2_IPad_Portrait"];
+            NSString *imageName2 = [dataForPage valueForKey:@"image2_IPad_Portrait"];
+            UIImage *image2 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName2]];;
+            if (isRethina) {
+                imageName2 = [imageName2 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName2]];
+                if (image1new) image2 = image1new;
+            } 
+            if (pageNumber.intValue < 3) image2 = [UIImage imageNamed:[dataForPage valueForKey:@"image2_IPad_Portrait"]];
+
             CGRect image2Frame = CGRectFromString([dataForPage valueForKey:@"image2_IPad_Portrait_Point"]);
             self.image2.image = image2;
             self.image2.frame = image2Frame;
             
-            UIImage *image3 = [dataForPage valueForKey:@"image3_IPad_Portrait"];;
+            //UIImage *image3 = [dataForPage valueForKey:@"image3_IPad_Portrait"];
+            NSString *imageName3 = [dataForPage valueForKey:@"image3_IPad_Portrait"];
+            UIImage *image3 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName3]];;
+            if (isRethina) {
+                imageName3 = [imageName3 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName3]];
+                if (image1new) image3 = image1new;
+            }
+            if (pageNumber.intValue < 3) image3 = [UIImage imageNamed:[dataForPage valueForKey:@"image3_IPad_Portrait"]];
+
             CGRect image3Frame = CGRectFromString([dataForPage valueForKey:@"image3_IPad_Portrait_Point"]);
             self.image3.image = image3;
             self.image3.frame = image3Frame;
             
-            UIImage *image4 = [dataForPage valueForKey:@"image4_IPad_Portrait"];;
+            //UIImage *image4 = [dataForPage valueForKey:@"image4_IPad_Portrait"];
+            NSString *imageName4 = [dataForPage valueForKey:@"image4_IPad_Portrait"];
+            UIImage *image4 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName4]];;
+            if (isRethina) {
+                imageName4 = [imageName4 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName4]];
+                if (image1new) image4 = image1new;
+            } 
             CGRect image4Frame = CGRectFromString([dataForPage valueForKey:@"image4_IPad_Portrait_Point"]);
             self.image4.image = image4;
             self.image4.frame = image4Frame;
             
-            UIImage *image5 = [dataForPage valueForKey:@"image5_IPad_Portrait"];;
+            //UIImage *image5 = [dataForPage valueForKey:@"image5_IPad_Portrait"];
+            NSString *imageName5 = [dataForPage valueForKey:@"image5_IPad_Portrait"];
+            UIImage *image5 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName5]];;
+            if (isRethina) {
+                imageName5 = [imageName5 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName5]];
+                if (image1new) image5 = image1new; 
+            } 
             CGRect image5Frame = CGRectFromString([dataForPage valueForKey:@"image5_IPad_Portrait_Point"]);
             self.image5.image = image5;
             self.image5.frame = image5Frame;
             
-            UIImage *image6 = [dataForPage valueForKey:@"image6_IPad_Portrait"];;
+            //UIImage *image6 = [dataForPage valueForKey:@"image6_IPad_Portrait"];
+            NSString *imageName6 = [dataForPage valueForKey:@"image6_IPad_Portrait"];
+            UIImage *image6 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName6]];;
+            if (isRethina) {
+                imageName6 = [imageName6 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName6]];
+                if (image1new) image6 = image1new; 
+            } 
             CGRect image6Frame = CGRectFromString([dataForPage valueForKey:@"image6_IPad_Portrait_Point"]);
             self.image6.image = image6;
             self.image6.frame = image6Frame;
             
-            UIImage *image7 = [dataForPage valueForKey:@"image7_IPad_Portrait"];;
+            //UIImage *image7 = [dataForPage valueForKey:@"image7_IPad_Portrait"];
+            NSString *imageName7 = [dataForPage valueForKey:@"image7_IPad_Portrait"];
+            UIImage *image7 = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName7]];;
+            if (isRethina) {
+                imageName7 = [imageName7 stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+                UIImage *image1new = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",documentsDirectory,imageName7]];
+                if (image1new) image7 = image1new; 
+            } 
             CGRect image7Frame = CGRectFromString([dataForPage valueForKey:@"image7_IPad_Portrait_Point"]);
             self.image7.image = image7;
             self.image7.frame = image7Frame;
@@ -415,8 +694,21 @@
     //self.dataLabel.text = [self.dataObject description];
     [self prepareAllImagesForInterfaceOrientation:self.interfaceOrientation];
     NSString *pageNumberDelimiter = nil;
-    
-    if (!self.currentSelectedFlagTag) { 
+    NSString *page = [self.dataObject valueForKey:@"page"];
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    NSNumber *pageNumber = [formatter numberFromString:page];
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSNumber *downloadedPages = delegate.downloadedPages;
+    if (downloadedPages && pageNumber.integerValue >= downloadedPages.integerValue && downloadedPages.integerValue != 16) {
+        self.nextPageButton.enabled = NO;
+        self.downloadingProgress.hidden = NO;
+        [self.downloadingProgress startAnimating];
+    } else {
+        self.downloadingProgress.hidden = YES;
+        [self.downloadingProgress stopAnimating];
+        self.nextPageButton.enabled = YES;
+    }
+    if (!self.currentSelectedFlagTag) {
         NSArray* preferredLangs = [NSLocale preferredLanguages];
         if (preferredLangs.count > 0) {
             NSString *language = [preferredLangs objectAtIndex:0];
@@ -427,7 +719,7 @@
             }
             if ([language isEqualToString:@"zh-Hans"] || [language isEqualToString:@"zh-Hant"]) { 
                 self.currentSelectedFlagTag = [[NSNumber alloc] initWithInt:1];
-                pageNumberDelimiter = @"from";
+                pageNumberDelimiter = @"从";
 
             }
             if ([language isEqualToString:@"en"] || [language isEqualToString:@"en-GB"] ) { 
@@ -437,17 +729,17 @@
             }
             if ([language isEqualToString:@"es"]) {
                 self.currentSelectedFlagTag = [[NSNumber alloc] initWithInt:3];
-                pageNumberDelimiter = @"from";
+                pageNumberDelimiter = @"de";
 
             }
             if ([language isEqualToString:@"ar"]) { 
                 self.currentSelectedFlagTag = [[NSNumber alloc] initWithInt:4];
-                pageNumberDelimiter = @"from";
+                pageNumberDelimiter = @"من";
 
             }
             if ([language isEqualToString:@"de"]) {
                 self.currentSelectedFlagTag = [[NSNumber alloc] initWithInt:6];
-                pageNumberDelimiter = @"from";
+                pageNumberDelimiter = @"von";
 
             }
             [[NSUserDefaults standardUserDefaults] setValue:self.currentSelectedFlagTag forKey:@"currentSelectedFlagTag"];
@@ -545,6 +837,11 @@
         return YES;
     }
 }
+
+- (BOOL)shouldAutorotate {
+    UIInterfaceOrientation orientation = [[UIDevice currentDevice] orientation];
+    return [self shouldAutorotateToInterfaceOrientation:orientation];
+}
 - (IBAction)previousPageStart:(id)sender {
     NSArray *viewControllers = nil;
     
@@ -555,7 +852,7 @@
 //        viewControllers = [NSArray arrayWithObjects:self, nextViewController, nil];
     } else {
         UIViewController *previousViewController = [self.modelController pageViewController:self.modelController.pageViewController viewControllerBeforeViewController:self];
-        viewControllers = [NSArray arrayWithObjects:previousViewController, self, nil];
+        viewControllers = [NSArray arrayWithObjects:previousViewController, nil];
         [self.modelController.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:NULL];
 
     }
@@ -585,9 +882,10 @@
         
         //get the page to go to
         UIViewController *previousViewController = [self.modelController pageViewController:self.modelController.pageViewController viewControllerAfterViewController:self];
-        viewControllers = [NSArray arrayWithObjects:previousViewController, self, nil];
-        [self.modelController.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:NULL];
-        
+        if (previousViewController) {
+            viewControllers = [NSArray arrayWithObjects:previousViewController, nil];
+            [self.modelController.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:NULL];
+        }
         //put it(or them if in landscape view) in an array
 //        NSArray *theViewControllers = nil;    
 //        theViewControllers = [NSArray arrayWithObjects:targetPageViewController, nil];
@@ -986,24 +1284,34 @@ static inline double radians (double degrees) { return degrees * M_PI/180; }
                 case 6:
                     language = @"DE";
                     break;
-                    
                 default:
                     break;
             }
-            NSString *finalFileName = [NSString stringWithFormat:@"page%@audio%@",page,language];
-
-            NSURL *fileToPlay = [[NSBundle mainBundle] URLForResource:finalFileName withExtension:@"mp3"];
-            self.theAudio = [[AVAudioPlayer alloc] initWithContentsOfURL:fileToPlay error:NULL];  
-            self.theAudio.delegate = self; 
-            dispatch_async(dispatch_get_main_queue(), ^(void) { 
-                self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateProgress) userInfo:nil repeats:YES];
-
-                self.playbackProgress.hidden = NO;
-            });            
-            //self.playbabkProgress.m = NO;
-
-            [self.theAudio prepareToPlay];
-            [self.theAudio play];
+            NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+            NSNumber *pageNumber = [formatter numberFromString:page];
+            NSURL *fileToPlay = nil;
+            if (pageNumber.intValue < 3) {
+                NSString *finalFileName = [NSString stringWithFormat:@"page%@audio%@",page,language];
+                fileToPlay = [[NSBundle mainBundle] URLForResource:finalFileName withExtension:@"caf"];
+            } else {
+                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                NSString *documentsDirectory = [paths objectAtIndex:0];
+                NSString *finalFileName = [NSString stringWithFormat:@"%@/%@/page%@audio%@.caf",documentsDirectory,language,page,language];
+                fileToPlay = [NSURL fileURLWithPath:finalFileName];
+            }
+            //NSData *dataVoice = [NSData dataWithContentsOfURL:fileToPlay];
+            NSError *error = nil;
+            self.theAudio = [[AVAudioPlayer alloc] initWithContentsOfURL:fileToPlay error:&error];
+            self.theAudio.delegate = self;
+            if (!error) {
+                dispatch_async(dispatch_get_main_queue(), ^(void) {
+                    self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateProgress) userInfo:nil repeats:YES];
+                    self.playbackProgress.hidden = NO;
+                });
+                //self.playbabkProgress.m = NO;
+                [self.theAudio prepareToPlay];
+                [self.theAudio play];
+            }
         });
         
 //    }];

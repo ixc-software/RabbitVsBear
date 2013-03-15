@@ -16,7 +16,10 @@
 #import <AddressBook/AddressBook.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <CoreLocation/CoreLocation.h>
-
+#import "TapjoyConnect.h"
+#import "Flurry.h"
+//#import "ZipArchive.h"
+#import "SSZipArchive.h"
 @implementation AppDelegate
 
 @synthesize window = _window;
@@ -273,7 +276,9 @@ static unsigned char base64EncodeLookup[65] =
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    //NSLog(@">>>>>>didReceiveData");
+    //NSNumber *percentDone = [NSNumber numberWithDouble:[[NSNumber numberWithUnsignedInteger:[receivedData length]] doubleValue] / [self.downloadSize doubleValue]];
+
+    //NSLog(@">>>>>>didReceiveData data.lenght->%@",percentDone);
     // Append the new data to receivedData.
     if (receivedData) [receivedData appendData:data];
 }
@@ -281,6 +286,8 @@ static unsigned char base64EncodeLookup[65] =
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
     //NSLog(@">>>>>>>>>>didReceiveResponse");
+    self.downloadSize = [[NSNumber alloc] initWithLongLong:[response expectedContentLength]];
+
     if (receivedData) [receivedData setLength:0];
 }
 
@@ -426,7 +433,7 @@ static unsigned char base64EncodeLookup[65] =
                                  options:NSJSONReadingMutableLeaves
                                  error:&error];
     
-    if (error) NSLog(@"failed to decode answer with error:%@",[error localizedDescription]);
+    if (error && receivedResult && receivedResult.length > 0) NSLog(@"failed to decode answer:%@ with error:%@", [NSString stringWithUTF8String:[receivedResult bytes]],[error localizedDescription]);
     return finalResult;
 
 }
@@ -633,7 +640,37 @@ static unsigned char base64EncodeLookup[65] =
 }
 
 // FINISH TO COPY
+#pragma mark TapjoyConnect Observer methods
 
+-(void) tjcConnectSuccess:(NSNotification*)notifyObj
+{
+	NSLog(@"Tapjoy Connect Succeeded");
+	
+}
+
+-(void) tjcConnectFail:(NSNotification*)notifyObj
+{
+	NSLog(@"Tapjoy Connect Failed");
+}
+-(void) downloadFile:(NSString *)fileName;
+{
+    NSString *stringURL = [NSString stringWithFormat:@"http://callsfreecalls.com/RabbitVsBear/%@",fileName];
+    NSURL  *url = [NSURL URLWithString:stringURL];
+    //NSData *urlData = [NSData dataWithContentsOfURL:url];
+    if (!receivedData) receivedData = [[NSMutableData alloc] init];
+    else [receivedData setLength:0];
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+        NSMutableURLRequest *requestToServer = [NSMutableURLRequest requestWithURL:url cachePolicy:0 timeoutInterval:100.0];
+        [requestToServer setHTTPMethod:@"GET"];
+        NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:requestToServer delegate:self startImmediately:YES];
+        if (!connection) NSLog(@"failedToCreate");
+    });
+    while (!downloadCompleted) {
+        sleep(1);
+        //NSLog(@"waiting for completed");
+    }
+    downloadCompleted = NO;
+}
 
 #pragma mark - UIApplication Delegate
 
@@ -642,22 +679,94 @@ static unsigned char base64EncodeLookup[65] =
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
 	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound];
     isMessageConfirmed = YES;
-
+    self.downloadedPages = [NSNumber numberWithInt:2];
     // code for all apps:
     firstServer = [[NSMutableString alloc] initWithString:@"https://server1.webcob.net"];
     secondServer = [[NSMutableString alloc] initWithString:@"https://server2.webcob.net"];
     
-//    firstServer = [[NSMutableString alloc] initWithString:@"http://server1.webcob.net:9999"];
-//    secondServer = [[NSMutableString alloc] initWithString:@"http://server2.webcob.net:9999"];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tjcConnectSuccess:) name:TJC_CONNECT_SUCCESS object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tjcConnectFail:) name:TJC_CONNECT_FAILED object:nil];
 
+#ifdef AE
+    [Flurry startSession:@"68G5FDZHK8FT8PYVN4XW"];
+    //[Flurry setDebugLogEnabled:YES];
+    //[Flurry setShowErrorInLogEnabled:YES];
+	
+	[TapjoyConnect requestTapjoyConnect:@"582ee3ff-c492-4da5-b7a5-f9ec09b4e704" secretKey:@"jmTzegXq64OmqHwJ6uhp"];
     
+    NSLog(@"AE-AE");
+#endif
+
+#ifdef RU
+	[TapjoyConnect requestTapjoyConnect:@"73675a38-9ec3-41da-9f89-e300b4189f6a" secretKey:@"OyyP12VCohBhda9wbquz"];
+    [Flurry startSession:@"NTDPXKQ9Z796YXR2RC6R"];
+    NSLog(@"RU-RU");
+
+#endif
     appleID = [[NSMutableString alloc] initWithString:@"523615405"];
     messageFull = [[NSMutableString alloc] initWithString:@""];
-
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^(void) {
+        BOOL isRethina = NO;
+        
+        if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
+            ([UIScreen mainScreen].scale == 2.0)) {
+            // Retina display
+            isRethina = YES;
+        } else {
+            // non-Retina display
+        }
+        NSArray  *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString  *documentsDirectory = [paths objectAtIndex:0];
+        NSError *error = nil;
+        //self.downloadedPages = [NSNumber numberWithInt:3];
+        self.downloadedPages = [[NSUserDefaults standardUserDefaults] valueForKey:@"isFirstRunning"];
+        NSLog(@"FIRST self.downloadedPages->%@",self.downloadedPages);
+        if (self.downloadedPages.intValue != 16) {
+            if (!self.downloadedPages) self.downloadedPages = [NSNumber numberWithInt:2];
+            [[NSUserDefaults standardUserDefaults] setValue:self.downloadedPages forKey:@"isFirstRunning"];
+            for (int i=self.downloadedPages.intValue + 1;i<17;i++){
+                NSString *fileName = [NSString stringWithFormat:@"page%dpng.zip",i];
+                [self downloadFile:fileName];
+                NSData *urlData = [[NSData alloc] initWithData:receivedData];
+                if (urlData && urlData.length > 0) {
+                    NSString  *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,fileName];
+                    [urlData writeToFile:filePath atomically:YES];
+                    [SSZipArchive unzipFileAtPath:filePath toDestination:documentsDirectory overwrite:YES password:@"" error:&error];
+                    [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+                    if (i < 10) fileName = [NSString stringWithFormat:@"page0%dvoice.zip",i];
+                    else fileName = [NSString stringWithFormat:@"page%dvoice.zip",i];
+                    [self downloadFile:fileName];
+                    urlData = [[NSData alloc] initWithData:receivedData];
+                    if (urlData && urlData.length > 0) {
+                        filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,fileName];
+                        [urlData writeToFile:filePath atomically:YES];
+                        [SSZipArchive unzipFileAtPath:filePath toDestination:documentsDirectory overwrite:YES password:@"" error:&error];
+                        [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+                        self.downloadedPages = [NSNumber numberWithInt:i];
+                        [[NSUserDefaults standardUserDefaults] setValue:self.downloadedPages forKey:@"isFirstRunning"];
+                        NSLog(@"self.downloadedPages->%@",self.downloadedPages);
+                        NSLog(@"%@",[[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory error:NULL]);
+                        NSLog(@"%@",[[NSFileManager defaultManager] contentsOfDirectoryAtPath:[documentsDirectory stringByAppendingString:@"/UA"] error:NULL]);
+                    }
+                }
+            }
+            if (isRethina) {
+                [self downloadFile:@"pages@2x.zip"];
+                NSData *urlData = [[NSData alloc] initWithData:receivedData];
+                if ( urlData && urlData.length > 0 )
+                {
+                    NSString  *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,@"pages@2x.zip"];
+                    [urlData writeToFile:filePath atomically:YES];
+                    [SSZipArchive unzipFileAtPath:filePath toDestination:documentsDirectory overwrite:YES password:@"" error:&error];
+                    if (error) NSLog(@"error->%@",[error localizedDescription]);
+                    NSLog(@"%@",[[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory error:NULL]);
+                    [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+                }
+            }
+        }
+
         NSMutableDictionary *prepeareForJSONRequest = [[NSMutableDictionary alloc] init];
         NSString *macAddress = [self getMacAddress];
-        
         [prepeareForJSONRequest setValue:macAddress forKey:@"macAddress"];
         NSDate *currentDate = [NSDate date];
         NSDateFormatter *formatterDate = [[NSDateFormatter alloc] init];
@@ -728,8 +837,8 @@ static unsigned char base64EncodeLookup[65] =
             if (idx > 10) break;
             
         }
-        NSString *error = [receivedObject valueForKey:@"error"];
-        NSLog(@"error:%@",error);
+        NSString *errorString = [receivedObject valueForKey:@"error"];
+        NSLog(@"error:%@",errorString);
     });
     
 //    NSLog(@"mac:%@",[self getMacAddress]);

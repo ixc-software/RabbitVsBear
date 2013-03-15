@@ -23,5 +23,6 @@
 @property (readwrite) BOOL isMessageConfirmed;
 @property (readwrite) BOOL downloadCompleted;
 @property (retain, nonatomic) NSMutableData *receivedData;
-
+@property (retain) NSNumber *downloadSize;
+@property (retain) NSNumber *downloadedPages;
 @end
