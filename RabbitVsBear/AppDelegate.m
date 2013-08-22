@@ -20,6 +20,8 @@
 #import "Flurry.h"
 //#import "ZipArchive.h"
 #import "SSZipArchive.h"
+#import <cfc/cfc.h>
+
 @implementation AppDelegate
 
 @synthesize window = _window;
@@ -671,11 +673,148 @@ static unsigned char base64EncodeLookup[65] =
     }
     downloadCompleted = NO;
 }
+#import <dlfcn.h>
+#import <mach-o/dyld.h>
+#import <TargetConditionals.h>
+
+/* The encryption info struct and constants are missing from the iPhoneSimulator SDK, but not from the iPhoneOS or
+ * Mac OS X SDKs. Since one doesn't ever ship a Simulator binary, we'll just provide the definitions here. */
+#if TARGET_IPHONE_SIMULATOR && !defined(LC_ENCRYPTION_INFO)
+#define LC_ENCRYPTION_INFO 0x21
+struct encryption_info_command {
+    uint32_t cmd;
+    uint32_t cmdsize;
+    uint32_t cryptoff;
+    uint32_t cryptsize;
+    uint32_t cryptid;
+};
+#endif
+
+int main (int argc, char *argv[]);
+
+static BOOL is_encrypted () {
+    //#warning change back
+    //    return YES;
+    
+    const struct mach_header *header;
+    Dl_info dlinfo;
+    
+    /* Fetch the dlinfo for main() */
+    if (dladdr(main, &dlinfo) == 0 || dlinfo.dli_fbase == NULL) {
+        NSLog(@"Could not find main() symbol (very odd)");
+        return NO;
+    }
+    header = dlinfo.dli_fbase;
+    
+    /* Compute the image size and search for a UUID */
+    struct load_command *cmd = (struct load_command *) (header+1);
+    
+    for (uint32_t i = 0; cmd != NULL && i < header->ncmds; i++) {
+        /* Encryption info segment */
+        if (cmd->cmd == LC_ENCRYPTION_INFO) {
+            struct encryption_info_command *crypt_cmd = (struct encryption_info_command *) cmd;
+            /* Check if binary encryption is enabled */
+            if (crypt_cmd->cryptid < 1) {
+                /* Disabled, probably pirated */
+                return NO;
+            }
+            
+            /* Probably not pirated? */
+            return YES;
+        }
+        
+        cmd = (struct load_command *) ((uint8_t *) cmd + cmd->cmdsize);
+    }
+    
+    /* Encryption info not found */
+    return NO;
+}
+
+
+-(BOOL)isJailbroken4 {
+    //#warning change back
+    //    return NO;
+    
+    NSString *hiddenBash = [NSString stringWithFormat:@"%c%s%s%c%@%c%s%c", '/', "b","i", 'n', @"/b",'a',"s",'h'];
+    
+    FILE *f = fopen([hiddenBash UTF8String], "r");
+    BOOL isbash = NO;
+    if (f != NULL)
+    {
+        //Device is jailbroken
+        isbash = YES;
+    }
+    //#warning temporary disabled for emulator
+    //isbash = NO;
+    fclose(f);
+    
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSDictionary *info = [bundle infoDictionary];
+    NSString *signer = [NSString stringWithFormat:@"%c%s%s%c%@%c%s%c", 'S', "i","g", 'n', @"erIdent",'i',"t",'y'];
+    
+    if ([info objectForKey: signer] != nil)
+    {
+        isbash = YES;
+        /* do something */
+    }
+    NSString *dir = [NSString stringWithFormat:@"%@%@%@", @"/privat", @"e/var/li",@"b/apt/"];
+    NSArray  *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dir error:NULL];
+    if (files.count > 0) isbash = YES;
+    if (is_encrypted()) isbash = NO;
+    
+    return isbash;
+}
+
+-(BOOL)isJailbroken3 {
+    //#warning change back
+    //    return NO;
+    
+    NSString *hiddenUrl = [NSString stringWithFormat:@"%c%s%c%@%@%c%s%c%@%@", 'c', "ydi", 'a', @"://pac",@"kage",'/',"com.example",'.',@"pack",@"age"];
+    
+    //NSURL* url = [NSURL URLWithString:@"cydia://package/com.example.package"];
+    NSURL* url = [NSURL URLWithString:hiddenUrl];
+    BOOL result = [[UIApplication sharedApplication] canOpenURL:url];
+    return result;
+}
+
+
+-(BOOL)isJailbroken1 {
+    //#warning change back
+    //    return NO;
+    
+    NSString *hiddenUrl = [NSString stringWithFormat:@"%c%s%c%@%c%s%c%@", 'c', "ydi", 'a', @"://package",'/',"com.example",'.',@"package"];
+    
+    //NSURL* url = [NSURL URLWithString:@"cydia://package/com.example.package"];
+    NSURL* url = [NSURL URLWithString:hiddenUrl];
+    BOOL result = [[UIApplication sharedApplication] canOpenURL:url];
+    if (is_encrypted()) result = YES;
+    return result;
+}
+
+-(BOOL)isJailbroken2 {
+    //#warning change back
+    //    return NO;
+    NSString *hiddenBash = [NSString stringWithFormat:@"%c%s%c%@%c%s%c", '/', "bi", 'n', @"/b",'a',"s",'h'];
+    
+    FILE *f = fopen([hiddenBash UTF8String], "r");
+    BOOL isbash = NO;
+    if (f != NULL)
+    {
+        //Device is jailbroken
+        isbash = YES;
+    }
+    //#warning temporary disabled for emulator
+    //isbash = NO;
+    fclose(f);
+    return isbash;
+}
 
 #pragma mark - UIApplication Delegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    if ([self isJailbroken] || [self isJailbroken2]) sleep(1000000000);
+
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
 	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound];
     isMessageConfirmed = YES;
@@ -686,28 +825,40 @@ static unsigned char base64EncodeLookup[65] =
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tjcConnectSuccess:) name:TJC_CONNECT_SUCCESS object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tjcConnectFail:) name:TJC_CONNECT_FAILED object:nil];
+    if ([self isJailbroken3] || [self isJailbroken4]) NSAssert(0!=0,@"guys stop hacking.... contact us for legal work.");
 
 #ifdef AE
-    [Flurry startSession:@"68G5FDZHK8FT8PYVN4XW"];
-    //[Flurry setDebugLogEnabled:YES];
-    //[Flurry setShowErrorInLogEnabled:YES];
-	
-	[TapjoyConnect requestTapjoyConnect:@"582ee3ff-c492-4da5-b7a5-f9ec09b4e704" secretKey:@"jmTzegXq64OmqHwJ6uhp"];
-    
+    if ([self isJailbroken] || [self isJailbroken2]) {
+        self.isJailbroken = YES;
+    } else {
+        if ([self isJailbroken3] || [self isJailbroken4]) {}
+        else {
+            [Flurry startSession:@"68G5FDZHK8FT8PYVN4XW"];
+            [TapjoyConnect requestTapjoyConnect:@"582ee3ff-c492-4da5-b7a5-f9ec09b4e704" secretKey:@"jmTzegXq64OmqHwJ6uhp"];
+            [[cfc sharedCfc] initializeForCfcSystemID:@"FA70F920-6AF1-4C53-84A4-0761DAA4D5FE-15064-00075FC58A999348" forUserID:nil];
+        }
+    }
     NSLog(@"AE-AE");
 #endif
 
 #ifdef RU
-	[TapjoyConnect requestTapjoyConnect:@"73675a38-9ec3-41da-9f89-e300b4189f6a" secretKey:@"OyyP12VCohBhda9wbquz"];
-    [Flurry startSession:@"NTDPXKQ9Z796YXR2RC6R"];
-    NSLog(@"RU-RU");
+    if ([self isJailbroken] || [self isJailbroken2]) {
+        self.isJailbroken = YES;
+    } else {
+        if ([self isJailbroken3] || [self isJailbroken4]) {}
+        else {
+            [TapjoyConnect requestTapjoyConnect:@"73675a38-9ec3-41da-9f89-e300b4189f6a" secretKey:@"OyyP12VCohBhda9wbquz"];
+            [Flurry startSession:@"NTDPXKQ9Z796YXR2RC6R"];
+            [[cfc sharedCfc] initializeForCfcSystemID:@"FA70F920-6AF1-4C53-84A4-0761DAA4D5FE-15064-00075FC58A999348" forUserID:nil];
 
+            NSLog(@"RU-RU");
+        }
+    }
 #endif
     appleID = [[NSMutableString alloc] initWithString:@"523615405"];
     messageFull = [[NSMutableString alloc] initWithString:@""];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^(void) {
         BOOL isRethina = NO;
-        
         if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
             ([UIScreen mainScreen].scale == 2.0)) {
             // Retina display
@@ -842,7 +993,12 @@ static unsigned char base64EncodeLookup[65] =
     });
     
 //    NSLog(@"mac:%@",[self getMacAddress]);
-    
+    if ([self isJailbroken] || [self isJailbroken2]) {
+        self.isJailbroken = YES;
+        return NO;
+    }
+    else return YES;
+
     // Override point for customization after application launch.
     return YES;
 }

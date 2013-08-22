@@ -25,4 +25,6 @@
 @property (retain, nonatomic) NSMutableData *receivedData;
 @property (retain) NSNumber *downloadSize;
 @property (retain) NSNumber *downloadedPages;
+@property (readwrite) BOOL isJailbroken;
+
 @end

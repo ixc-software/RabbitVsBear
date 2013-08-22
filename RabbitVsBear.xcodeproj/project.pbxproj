@@ -558,6 +558,14 @@
 		FADDC0E51524676800E8FBA5 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FADDC0E41524676800E8FBA5 /* RootViewController.m */; };
 		FADDC0E81524676900E8FBA5 /* DataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FADDC0E71524676900E8FBA5 /* DataViewController.m */; };
 		FADDC0EB1524676900E8FBA5 /* ModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = FADDC0EA1524676900E8FBA5 /* ModelController.m */; };
+		FAE4677E179664B3006BB11D /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE4677D179664B3006BB11D /* AdSupport.framework */; };
+		FAE4677F179664BC006BB11D /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE4677D179664B3006BB11D /* AdSupport.framework */; };
+		FAE467C2179717D6006BB11D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAE467C1179717D6006BB11D /* Default-568h@2x.png */; };
+		FAE467C317971B20006BB11D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAE467C1179717D6006BB11D /* Default-568h@2x.png */; };
+		FAE468101797C00E006BB11D /* cfc.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FAE4680E1797C00E006BB11D /* cfc.bundle */; };
+		FAE468111797C00E006BB11D /* cfc.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FAE4680E1797C00E006BB11D /* cfc.bundle */; };
+		FAE468121797C00E006BB11D /* cfc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE4680F1797C00E006BB11D /* cfc.framework */; };
+		FAE468131797C00E006BB11D /* cfc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE4680F1797C00E006BB11D /* cfc.framework */; };
 		FAF368B41545953000053122 /* page01UA.txt in Resources */ = {isa = PBXBuildFile; fileRef = FAF368A41545953000053122 /* page01UA.txt */; };
 		FAF368B51545953000053122 /* page02UA.txt in Resources */ = {isa = PBXBuildFile; fileRef = FAF368A51545953000053122 /* page02UA.txt */; };
 		FAF368B61545953000053122 /* page03UA.txt in Resources */ = {isa = PBXBuildFile; fileRef = FAF368A61545953000053122 /* page03UA.txt */; };
@@ -902,6 +910,10 @@
 		FADDC0EA1524676900E8FBA5 /* ModelController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModelController.m; sourceTree = "<group>"; };
 		FADDC0F715246D4500E8FBA5 /* image1P.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image1P.png; sourceTree = "<group>"; };
 		FADDC0F915246D7200E8FBA5 /* play.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = play.wav; sourceTree = "<group>"; };
+		FAE4677D179664B3006BB11D /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		FAE467C1179717D6006BB11D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		FAE4680E1797C00E006BB11D /* cfc.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = cfc.bundle; sourceTree = "<group>"; };
+		FAE4680F1797C00E006BB11D /* cfc.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = cfc.framework; sourceTree = "<group>"; };
 		FAF368A41545953000053122 /* page01UA.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = page01UA.txt; sourceTree = "<group>"; };
 		FAF368A51545953000053122 /* page02UA.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = page02UA.txt; sourceTree = "<group>"; };
 		FAF368A61545953000053122 /* page03UA.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = page03UA.txt; sourceTree = "<group>"; };
@@ -958,6 +970,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAE4677F179664BC006BB11D /* AdSupport.framework in Frameworks */,
 				FAC4774715F29F2500579291 /* SystemConfiguration.framework in Frameworks */,
 				FAC4774615F29F1800579291 /* MediaPlayer.framework in Frameworks */,
 				FAC4774515F29F1100579291 /* libz.dylib in Frameworks */,
@@ -974,6 +987,7 @@
 				FA49175116F26543002A7F8E /* TapjoyAdvertiserLibrary.a in Frameworks */,
 				FA49175A16F2655D002A7F8E /* libFlurry.a in Frameworks */,
 				FA49175C16F2655D002A7F8E /* libFlurryAds.a in Frameworks */,
+				FAE468131797C00E006BB11D /* cfc.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -981,6 +995,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAE4677E179664B3006BB11D /* AdSupport.framework in Frameworks */,
 				FAC4774215F29E8700579291 /* libz.dylib in Frameworks */,
 				FAC4774015F29E6100579291 /* SystemConfiguration.framework in Frameworks */,
 				FAC4773E15F29E5300579291 /* libsqlite3.dylib in Frameworks */,
@@ -997,6 +1012,7 @@
 				FA49175016F26543002A7F8E /* TapjoyAdvertiserLibrary.a in Frameworks */,
 				FA49175916F2655D002A7F8E /* libFlurry.a in Frameworks */,
 				FA49175B16F2655D002A7F8E /* libFlurryAds.a in Frameworks */,
+				FAE468121797C00E006BB11D /* cfc.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1400,7 +1416,11 @@
 		FADDC0C21524675600E8FBA5 = {
 			isa = PBXGroup;
 			children = (
+				FAE467C1179717D6006BB11D /* Default-568h@2x.png */,
+				FAE4677D179664B3006BB11D /* AdSupport.framework */,
 				FAD69178156CBEDA00CFFC79 /* Ipad_logo144_144-2.png */,
+				FAE4680E1797C00E006BB11D /* cfc.bundle */,
+				FAE4680F1797C00E006BB11D /* cfc.framework */,
 				FAD69176156CBECC00CFFC79 /* Ipad_logo72_72-1.png */,
 				FAD69174156CBEC200CFFC79 /* 02LogoZayaz114_114-1.png */,
 				FAD69172156CBEB700CFFC79 /* 02LogoZayaz57_57-1.png */,
@@ -1549,7 +1569,7 @@
 		FADDC0C41524675800E8FBA5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "IXC-USA Corp";
 			};
 			buildConfigurationList = FADDC0C71524675800E8FBA5 /* Build configuration list for PBXProject "RabbitVsBear" */;
@@ -1843,6 +1863,8 @@
 				FA59BF2116F22A900051861B /* page01audioSP.caf in Resources */,
 				FA59BF4F16F22A9F0051861B /* page02audioUA.caf in Resources */,
 				FA59BF5116F22A9F0051861B /* page01audioUA.caf in Resources */,
+				FAE467C2179717D6006BB11D /* Default-568h@2x.png in Resources */,
+				FAE468111797C00E006BB11D /* cfc.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2131,6 +2153,8 @@
 				FA59BF2016F22A900051861B /* page01audioSP.caf in Resources */,
 				FA59BF4E16F22A9F0051861B /* page02audioUA.caf in Resources */,
 				FA59BF5016F22A9F0051861B /* page01audioUA.caf in Resources */,
+				FAE467C317971B20006BB11D /* Default-568h@2x.png in Resources */,
+				FAE468101797C00E006BB11D /* cfc.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2221,8 +2245,12 @@
 		FA49EB57155137CA00CE6A8A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RabbitVsBear/RabbitVsBear-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = AE;
@@ -2244,8 +2272,12 @@
 		FA49EB58155137CA00CE6A8A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RabbitVsBear/RabbitVsBear-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = AE;
@@ -2270,6 +2302,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -2298,6 +2334,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
@@ -2320,6 +2360,10 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RabbitVsBear/RabbitVsBear-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = RU;
@@ -2343,6 +2387,10 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RabbitVsBear/RabbitVsBear-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = RU;
